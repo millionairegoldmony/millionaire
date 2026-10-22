@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رحلة المليونير - الاستثمار الذكي والربح المضمون</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyberBlack: '#050508',
+                        cyberDark: '#0d0d12',
+                        cyberCard: '#12121c',
+                        neonPink: '#ff007f',
+                        neonCyan: '#00f0ff',
+                        neonGreen: '#00ff66',
+                        neonYellow: '#ffea00',
+                    },
+                    boxShadow: {
+                        'neon-cyan': '0 0 15px rgba(0, 240, 255, 0.4)',
+                        'neon-pink': '0 0 15px rgba(255, 0, 127, 0.4)',
+                        'neon-green': '0 0 15px rgba(0, 255, 102, 0.4)',
+                        'neon-yellow': '0 0 15px rgba(255, 234, 0, 0.4)',
+                        'rgb-box': '0 0 20px rgba(0, 240, 255, 0.3), inset 0 0 15px rgba(255, 0, 127, 0.2)',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Inter / Arabic support -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #050508;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+        /* Custom RGB Cyberpunk Border Animation */
+        @keyframes rgbGlow {
+            0% { border-color: #00f0ff; box-shadow: 0 0 10px rgba(0, 240, 255, 0.5); }
+            33% { border-color: #ff007f; box-shadow: 0 0 10px rgba(255, 0, 127, 0.5); }
+            66% { border-color: #00ff66; box-shadow: 0 0 10px rgba(0, 255, 102, 0.5); }
+            100% { border-color: #00f0ff; box-shadow: 0 0 10px rgba(0, 240, 255, 0.5); }
+        }
+        .rgb-border {
+            border: 2px solid #00f0ff;
+            animation: rgbGlow 6s infinite;
+        }
+        .rgb-text {
+            background: linear-gradient(45deg, #00f0ff, #ff007f, #00ff66, #ffea00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Card Flip for Lucky Card */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050508;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f0ff;
+        }
+    </style>
+</head>
+<body class="bg-cyberBlack min-h-screen flex flex-col justify-between selection:bg-neonPink selection:text-white">
+
+    <!-- Toast / Message Box Modal (No alert() used) -->
+    <div id="custom-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md hidden">
+        <div class="bg-cyberDark rgb-border p-6 rounded-2xl max-w-md w-full mx-4 text-center shadow-rgb-box">
+            <div id="modal-icon" class="text-4xl mb-3">💎</div>
+            <h3 id="modal-title" class="text-xl font-bold mb-2 rgb-text">تنبيه النظام</h3>
+            <p id="modal-message" class="text-gray-300 text-sm mb-6 leading-relaxed">رسالة النظام هنا</p>
+            <button onclick="closeModal()" class="w-full py-3 bg-gradient-to-r from-neonCyan to-neonPink text-black font-bold rounded-xl hover:opacity-90 transition shadow-neon-cyan">حسناً</button>
+        </div>
+    </div>
+
+    <!-- Top Navigation / Header -->
+    <header class="sticky top-0 z-40 bg-cyberBlack/90 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            
+            <!-- Logo & Title with Secret Admin Long Press -->
+            <div class="flex items-center space-x-3 space-x-reverse cursor-pointer select-none" id="admin-trigger" title="رحلة المليونير">
+                <div class="w-12 h-12 rounded-xl bg-cyberDark rgb-border flex items-center justify-center text-2xl shadow-neon-cyan animate-pulse">
+                    💎
+                </div>
+                <div>
+                    <h1 id="header-brand-title" class="text-2xl font-black rgb-text tracking-wider">رحلة المليونير</h1>
+                    <p class="text-xs text-gray-400">استثمر فلوسك صح من غير مجهود وأرباح مضمونة ورأس ماله بسيط</p>
+                </div>
+            </div>
+
+            <!-- Live Status & Ticker -->
+            <div class="flex items-center space-x-4 space-x-reverse bg-cyberDark px-4 py-1.5 rounded-full border border-gray-800 shadow-inner">
+                <div class="flex items-center space-x-2 space-x-reverse">
+                    <span class="w-2.5 h-2.5 rounded-full bg-neonGreen animate-ping"></span>
+                    <span class="text-xs font-bold text-neonGreen">مباشر</span>
+                </div>
+                <div class="h-4 w-[1px] bg-gray-700"></div>
+                <div class="text-xs text-gray-300 font-semibold">
+                    الزوار الآن: <span id="live-visitors" class="text-neonCyan font-bold">842,109</span>
+                </div>
+            </div>
+
+            <!-- Navigation Actions -->
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <!-- Page Switcher Button -->
+                <button onclick="togglePageView()" id="page-switch-btn" class="px-4 py-2 rounded-xl bg-cyberDark hover:bg-gray-800 border border-gray-700 text-neonCyan text-sm font-bold flex items-center gap-2 transition shadow-neon-cyan">
+                    <span id="switch-icon">🎰</span>
+                    <span id="switch-text">لعبة المليونير</span>
+                </button>
+
+                <!-- Share Button -->
+                <button onclick="handleShare()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-neonPink/20 to-neonCyan/20 hover:opacity-90 border border-neonPink text-neonPink text-sm font-bold flex items-center gap-2 transition shadow-neon-pink">
+                    <span>🔗</span>
+                    <span>شارك الصفحة</span>
+                </button>
+
+                <!-- Account / Login Button -->
+                <button onclick="openAuthModal()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-neonCyan to-neonPink text-black text-sm font-black flex items-center gap-2 transition shadow-neon-cyan">
+                    <span>👤</span>
+                    <span id="auth-btn-label">حسابي</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area (Dynamic Views: Home vs Game) -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
+
+        <!-- ================= HOME VIEW (رحلة المليونير) ================= -->
+        <div id="home-view" class="space-y-12">
+            
+            <!-- Hero Banner / Subtitle Banner -->
+            <section class="text-center bg-cyberDark rgb-border p-8 rounded-3xl relative overflow-hidden shadow-rgb-box">
+                <div class="absolute -right-20 -top-20 w-60 h-60 bg-neonCyan/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -left-20 -bottom-20 w-60 h-60 bg-neonPink/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <h2 class="text-3xl md:text-5xl font-black mb-4 rgb-text">بوابة الاستثمار والحرية المالية</h2>
+                <p id="hero-subtitle" class="text-gray-300 text-base md:text-lg max-w-2xl mx-auto mb-6">
+                    استثمر فلوسك صح من غير مجهود وأرباح مضمونة ورأس ماله بسيط. انضم لألاف المستثمرين الآن واجعل أموالك تعمل نيابة عنك مدى الحياة.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="scrollToSection('investment-store')" class="px-6 py-3 bg-gradient-to-r from-neonCyan to-neonGreen text-black font-extrabold rounded-xl hover:opacity-95 transition shadow-neon-cyan">
+                        تصفح باقات الاستثمار 💳
+                    </button>
+                    <button onclick="switchPageView('game')" class="px-6 py-3 bg-cyberCard border border-neonPink text-neonPink font-extrabold rounded-xl hover:bg-neonPink/10 transition shadow-neon-pink">
+                        العب لعبة المليونير 💎
+                    </button>
+                </div>
+            </section>
+
+            <!-- Digital Financial Dashboard (لوحة التحكم الرقمية المتصلة) -->
+            <section class="bg-cyberDark rgb-border p-6 md:p-8 rounded-3xl shadow-rgb-box">
+                <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+                    <div class="flex items-center gap-3">
+                        <span class="text-3xl">📊</span>
+                        <div>
+                            <h3 class="text-xl font-bold rgb-text">لوحة التحكم الرقمية للحساب</h3>
+                            <p class="text-xs text-gray-400">متابعة الأرباح والعد التنازلي والباقات الفعالة</p>
+                        </div>
+                    </div>
+                    <div id="dashboard-status-badge" class="px-3 py-1 bg-gray-800 text-gray-300 text-xs font-semibold rounded-full border border-gray-700">
+                        غير مسجل الدخول
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Total Profit Balance -->
+                    <div class="bg-cyberBlack p-6 rounded-2xl border border-gray-800 relative overflow-hidden">
+                        <div class="text-gray-400 text-sm mb-1">إجمالي رصيد أرباح الحساب</div>
+                        <div id="dash-total-profit" class="text-3xl font-black text-neonGreen">0.00 EGP</div>
+                        <div class="text-xs text-gray-500 mt-2">من عوائد الباقات الفعالة</div>
+                        <div class="absolute right-4 top-4 text-2xl opacity-20">💰</div>
+                    </div>
+
+                    <!-- Hourly Profit Countdown -->
+                    <div class="bg-cyberBlack p-6 rounded-2xl border border-gray-800 relative overflow-hidden">
+                        <div class="text-gray-400 text-sm mb-1">الربح القادم خلال الساعة</div>
+                        <div id="dash-hourly-countdown" class="text-3xl font-black text-neonCyan">00:00:00</div>
+                        <div id="dash-hourly-rate" class="text-xs text-neonCyan mt-2">+0.00 EGP كل ساعة</div>
+                        <div class="absolute right-4 top-4 text-2xl opacity-20">⏳</div>
+                    </div>
+
+                    <!-- 3-Month Withdrawal Countdown -->
+                    <div class="bg-cyberBlack p-6 rounded-2xl border border-gray-800 relative overflow-hidden">
+                        <div class="text-gray-400 text-sm mb-1">موعد سحب الأرباح الكبرى (3 أشهر)</div>
+                        <div id="dash-withdrawal-countdown" class="text-2xl font-black text-neonYellow">--:--:--</div>
+                        <div id="dash-withdrawal-status" class="text-xs text-gray-500 mt-2">متاح بعد تفعيل أول باقة</div>
+                        <div class="absolute right-4 top-4 text-2xl opacity-20">🔒</div>
+                    </div>
+                </div>
+
+                <!-- Active Packages List -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 text-gray-200 flex items-center gap-2">
+                        <span>💳</span> الباقات الفعالة حالياً
+                    </h4>
+                    <div id="active-packages-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="bg-cyberBlack/60 border border-gray-800 rounded-xl p-4 text-center text-gray-400 text-sm py-8">
+                            لا توجد باقات فعالة حالياً. اختر باقة أدناه وابدأ رحلة الاستثمار!
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Investment Store & Cloud (رحلة المليونير) -->
+            <section id="investment-store" class="space-y-6">
+                <div class="text-center">
+                    <div class="inline-block p-2 bg-cyberDark rounded-2xl rgb-border mb-2 text-3xl">💳</div>
+                    <h3 class="text-3xl font-black rgb-text">متجر باقات الاستثمار (عائد مدى الحياة)</h3>
+                    <p class="text-gray-400 text-sm max-w-xl mx-auto mt-1">اختر الباقة المناسبة لميزانيتك، واربح عائداً بالساعة مدى الحياة. سحب الأرباح بعد 3 أشهر من شراء الباقة.</p>
+                </div>
+
+                <!-- Investment Packages Grid -->
+                <div id="investment-packages-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Rendered dynamically by JS based on admin settings -->
+                </div>
+            </section>
+
+            <!-- Explanation & Guide Section -->
+            <section class="bg-cyberDark rgb-border p-8 rounded-3xl shadow-rgb-box space-y-6">
+                <div class="text-center">
+                    <h3 class="text-2xl font-black rgb-text">كيف تبدأ رحلتك نحو المليون؟</h3>
+                    <p class="text-gray-400 text-sm mt-1">خطوات بسيطة ومضمونة لتحقيق العوائد المالية</p>
+                </div>
+
+                <div id="explanation-points-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-cyberBlack p-5 rounded-2xl border border-gray-800">
+                        <div class="text-neonCyan text-xl font-bold mb-2">01. استثمار ذكي</div>
+                        <p class="text-gray-300 text-sm">استثمر فلوسك صح من غير مجهود وأرباح مضمونة بعائدات مستمرة.</p>
+                    </div>
+                    <div class="bg-cyberBlack p-5 rounded-2xl border border-gray-800">
+                        <div class="text-neonPink text-xl font-bold mb-2">02. حساب شخصي</div>
+                        <p class="text-gray-300 text-sm">أنشئ حساب برقم هاتفك وكلمة السر لتأمين أرباحك وإدارتها بكفاءة.</p>
+                    </div>
+                    <div class="bg-cyberBlack p-5 rounded-2xl border border-gray-800">
+                        <div class="text-neonGreen text-xl font-bold mb-2">03. باقات مدى الحياة</div>
+                        <p class="text-gray-300 text-sm">اشترِ باقة مناسبة بعائد أرباح مضمونة مدى الحياة تُحسب بالساعة.</p>
+                    </div>
+                    <div class="bg-cyberBlack p-5 rounded-2xl border border-gray-800">
+                        <div class="text-neonYellow text-xl font-bold mb-2">04. موعد السحب</div>
+                        <p class="text-gray-300 text-sm">سحب الأرباح بعد 3 أشهر من شراء الباقة وتفعيلها بنجاح.</p>
+                    </div>
+                    <div class="bg-cyberBlack p-5 rounded-2xl border border-gray-800">
+                        <div class="text-neonCyan text-xl font-bold mb-2">05. هدايا الألماس</div>
+                        <p class="text-gray-300 text-sm">شارك الصفحة للحصول على الألماس 💎 في لعبة المليونير ومضاعفة فرصك.</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- ================= GAME VIEW (لعبة المليونير) ================= -->
+        <div id="game-view" class="space-y-12 hidden">
+            
+            <!-- Game Header Banner -->
+            <section class="text-center bg-cyberDark rgb-border p-8 rounded-3xl relative overflow-hidden shadow-rgb-box">
+                <div class="inline-block p-3 bg-cyberBlack rounded-2xl rgb-border mb-3 text-4xl animate-bounce">💎</div>
+                <h2 class="text-3xl md:text-5xl font-black mb-3 rgb-text">لعبة المليونير الكبرى</h2>
+                <p id="game-subtitle-text" class="text-gray-300 text-base max-w-xl mx-auto mb-4">
+                    افتح كارت الحظ الجميل بـ جوهرة واحدة فقط 💎 واربح جوائز مذهلة من 250 ألف جنيه وحتى 100 مليون جنيه!
+                </p>
+                
+                <!-- User Diamonds Balance Display -->
+                <div class="inline-flex items-center gap-3 bg-cyberBlack px-6 py-2.5 rounded-full border border-neonCyan shadow-neon-cyan">
+                    <span class="text-xl">💎</span>
+                    <span class="text-gray-300 text-sm">رصيد الجواهر لديك:</span>
+                    <span id="user-diamonds-count" class="text-neonCyan font-black text-lg">0</span> جواهر
+                </div>
+            </section>
+
+            <!-- The Lucky Card (كارت الحظ RGB) -->
+            <section class="flex flex-col items-center justify-center py-6">
+                <div class="perspective-1000 w-full max-w-sm h-96 cursor-pointer" onclick="flipLuckyCard()">
+                    <div id="lucky-card-inner" class="relative w-full h-full transform-style-3d shadow-2xl rounded-3xl">
+                        
+                        <!-- Card Front (Back of Card view with 'مليونير' & Golden ornate background) -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-amber-600 via-yellow-500 to-amber-700 rounded-3xl rgb-border p-6 flex flex-col items-center justify-center text-center backface-hidden shadow-rgb-box">
+                            <div class="absolute inset-2 border-2 border-dashed border-black/30 rounded-2xl pointer-events-none"></div>
+                            <div class="text-6xl mb-4 animate-pulse">💎</div>
+                            <h3 class="text-4xl font-black text-black tracking-widest mb-2 drop-shadow-md">مليونير</h3>
+                            <p class="text-black/90 font-bold text-sm bg-yellow-300/80 px-4 py-1.5 rounded-full shadow">اضغط لفتح كارت الحظ (يكلف 1 💎)</p>
+                            <span class="absolute bottom-4 text-xs font-semibold text-black/70">انقر للقلب والكشف عن الجائزة</span>
+                        </div>
+
+                        <!-- Card Back (Result view) -->
+                        <div class="absolute inset-0 bg-cyberDark rounded-3xl rgb-border p-6 flex flex-col items-center justify-center text-center backface-hidden rotate-y-180 shadow-rgb-box">
+                            <div class="text-5xl mb-3">🎲</div>
+                            <h4 id="card-result-title" class="text-2xl font-black text-neonYellow mb-2">جرب حظك مرة أخرى</h4>
+                            <p id="card-result-msg" class="text-gray-300 text-sm mb-4">حظ سعيد في المرة القادمة! استمر في اللعب لتكون المليونير القادم.</p>
+                            <div class="text-xs text-neonCyan font-bold bg-cyberBlack px-3 py-1 rounded-full border border-gray-700">
+                                جائزة الكارت: من 250 ألف إلى 100 مليون جنيه
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Diamond Packages Store (باقات الجواهر) -->
+            <section class="space-y-6">
+                <div class="text-center">
+                    <h3 class="text-2xl font-black rgb-text">شحن باقات الجواهر 💎</h3>
+                    <p class="text-gray-400 text-sm mt-1">سعر الجوهرة الواحدة: 20 جنيه. هدايا فورية: 3 جواهر مجانية عند الشحن + جوهرة مجانية يومياً!</p>
+                </div>
+
+                <div id="diamond-packages-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <!-- Rendered dynamically by JS -->
+                </div>
+            </section>
+
+            <!-- Game Rules / Explanation -->
+            <section class="bg-cyberDark rgb-border p-6 rounded-2xl shadow-rgb-box text-center max-w-2xl mx-auto">
+                <h4 id="game-rules-title" class="text-lg font-bold text-neonCyan mb-2">قواعد لعبة المليونير</h4>
+                <p id="game-rules-desc" class="text-gray-300 text-xs leading-relaxed">
+                    اللعب يتم من نفس الحساب الشخصي وبنفس الشروط. يجب أن يكون الحساب مسجلاً قبل شحن الجواهر. استمتع بالكيلو أرباح والجواهر اليومية المجانية!
+                </p>
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= MODALS & FORMS ================= -->
+
+    <!-- Auth Modal (حسابي - Login / Register) -->
+    <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md hidden">
+        <div class="bg-cyberDark/95 rgb-border p-6 md:p-8 rounded-3xl max-w-md w-full mx-4 shadow-rgb-box relative">
+            <button onclick="closeAuthModal()" class="absolute left-4 top-4 text-gray-400 hover:text-white text-xl">✕</button>
+            
+            <div class="text-center mb-6">
+                <div class="text-3xl mb-2">👤</div>
+                <h3 class="text-2xl font-black rgb-text">حسابي الشخصي</h3>
+                <p class="text-xs text-gray-400">سجل بياناتك مرة واحدة فقط لحفظ أرباحك وإدارتها</p>
+            </div>
+
+            <form id="auth-form" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">الاسم الكامل</label>
+                    <input type="text" id="auth-name" required placeholder="أدخل اسمك الكريم" class="w-full bg-cyberBlack border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-neonCyan focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">رقم الهاتف أو الواتساب (برمز الدولة)</label>
+                    <input type="tel" id="auth-phone" required placeholder="مثال: +201012345678" class="w-full bg-cyberBlack border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-neonCyan focus:outline-none" dir="ltr">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">كلمة السر</label>
+                    <input type="password" id="auth-password" required placeholder="••••••••" class="w-full bg-cyberBlack border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-neonCyan focus:outline-none" dir="ltr">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">تأكيد كلمة السر</label>
+                    <input type="password" id="auth-password-confirm" required placeholder="••••••••" class="w-full bg-cyberBlack border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-neonCyan focus:outline-none" dir="ltr">
+                </div>
+
+                <!-- Mandatory Checkbox Agreement -->
+                <div class="flex items-start gap-2 pt-2">
+                    <input type="checkbox" id="auth-terms" required class="mt-1 accent-neonCyan w-4 h-4">
+                    <label for="auth-terms" class="text-xs text-gray-300 leading-relaxed cursor-pointer">
+                        أنا موافق على المشاركة في الموقع والشراء فيه ومسؤول عن ذلك.
+                    </label>
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-neonCyan to-neonPink text-black font-black rounded-xl hover:opacity-90 transition shadow-neon-cyan mt-2">
+                    حفظ الدخول والانضمام
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Deposit Modal (شراء باقة أو شحن جواهر) -->
+    <div id="deposit-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md hidden">
+        <div class="bg-cyberDark/95 rgb-border p-6 md:p-8 rounded-3xl max-w-lg w-full mx-4 shadow-rgb-box relative">
+            <button onclick="closeDepositModal()" class="absolute left-4 top-4 text-gray-400 hover:text-white text-xl">✕</button>
+            
+            <div class="text-center mb-6">
+                <div class="text-3xl mb-2">💳</div>
+                <h3 id="deposit-modal-title" class="text-2xl font-black rgb-text">تأكيد عملية الشحن</h3>
+                <p id="deposit-modal-subtitle" class="text-xs text-gray-400 mt-1">اتبع التعليمات أدناه لإتمام الشحن بنجاح</p>
+            </div>
+
+            <!-- Deposit Instructions (Controlled by Admin) -->
+            <div class="bg-cyberBlack p-4 rounded-xl border border-gray-800 mb-4 text-xs text-gray-300 space-y-2">
+                <div class="font-bold text-neonCyan">تعليمات الشحن والتحويل:</div>
+                <p id="admin-deposit-instructions" class="leading-relaxed">
+                    قم بتحويل المبلغ المطلوبة إلى رقم المحفظة أو الحساب البنكي المعتمد، ثم ارفع صورة سكرين شوت التحويل وتأكيد العملية.
+                </p>
+                <div class="p-2 bg-cyberDark rounded border border-gray-700 text-neonYellow font-mono font-bold text-center" id="admin-payment-account-display">
+                    فودافون كاش / إنستاباي: 01012345678
+                </div>
+            </div>
+
+            <form id="deposit-form" onsubmit="handleDepositSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">رقم التحويل أو مرجع المعاملة</label>
+                    <input type="text" id="deposit-trx-id" required placeholder="أدخل رقم العملية أو الهاتف المحول منه" class="w-full bg-cyberBlack border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-neonCyan focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">رفع صورة سكرين شوت التحويل المالي</label>
+                    <input type="file" id="deposit-screenshot" accept="image/*" required class="w-full text-xs text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-cyberCard file:text-neonCyan hover:file:bg-gray-800 bg-cyberBlack border border-gray-700 rounded-xl p-2">
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-neonCyan to-neonGreen text-black font-black rounded-xl hover:opacity-90 transition shadow-neon-cyan">
+                    إرسال طلب الشحن والتأكيد
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- ================= SECRET ADMIN PANEL ================= -->
+    <div id="admin-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-lg hidden">
+        <div class="bg-cyberDark rgb-border p-6 md:p-8 rounded-3xl max-w-4xl w-full mx-4 shadow-rgb-box relative max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between pb-4 border-b border-gray-800 mb-6">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">🔐</span>
+                    <h3 class="text-xl font-black rgb-text">لوحة تحكم الأدمن السرية</h3>
+                </div>
+                <button onclick="closeAdminPanel()" class="text-gray-400 hover:text-white text-xl">✕</button>
+            </div>
+
+            <!-- Admin Content Container -->
+            <div class="overflow-y-auto flex-grow space-y-6 pr-2">
+                
+                <!-- Tab Navigation inside Admin -->
+                <div class="flex flex-wrap gap-2 pb-2 border-b border-gray-800">
+                    <button onclick="switchAdminTab('deposits')" id="admin-tab-btn-deposits" class="px-4 py-2 bg-neonCyan text-black font-bold rounded-xl text-xs transition">طلبات الشحن والاستثمار</button>
+                    <button onclick="switchAdminTab('packages')" id="admin-tab-btn-packages" class="px-4 py-2 bg-cyberBlack text-gray-300 hover:text-white font-bold rounded-xl text-xs transition border border-gray-700">باقات الاستثمار</button>
+                    <button onclick="switchAdminTab('texts')" id="admin-tab-btn-texts" class="px-4 py-2 bg-cyberBlack text-gray-300 hover:text-white font-bold rounded-xl text-xs transition border border-gray-700">النصوص والروابط</button>
+                    <button onclick="switchAdminTab('game')" id="admin-tab-btn-game" class="px-4 py-2 bg-cyberBlack text-gray-300 hover:text-white font-bold rounded-xl text-xs transition border border-gray-700">لعبة المليونير</button>
+                </div>
+
+                <!-- Tab 1: Deposits & Screenshot Review -->
+                <div id="admin-tab-deposits" class="space-y-4">
+                    <h4 class="text-sm font-bold text-neonCyan">طلبات الشحن المعلقة والمرفوعة من المستخدمين:</h4>
+                    <div id="admin-deposits-list" class="space-y-3">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <!-- Tab 2: Packages Pricing & Settings -->
+                <div id="admin-tab-packages" class="space-y-4 hidden">
+                    <h4 class="text-sm font-bold text-neonCyan">تعديل باقات الاستثمار (السعر والعائد بالساعة):</h4>
+                    <div id="admin-packages-list" class="space-y-3">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <!-- Tab 3: Texts & Share Link Settings -->
+                <div id="admin-tab-texts" class="space-y-4 hidden">
+                    <div class="space-y-3">
+                        <label class="block text-xs font-semibold text-gray-300">رابط المشاركة لموقع رحلة المليونير</label>
+                        <input type="text" id="admin-edit-share-link" class="w-full bg-cyberBlack border border-gray-700 rounded-xl px-4 py-2 text-sm text-white focus:border-neonCyan focus:outline-none">
+                    </div>
+                    <div class="space-y-3">
+                        <label class="block text-xs font-semibold text-gray-300">نص المنشور المنسوخ عند المشاركة</label>
+                        <textarea id="admin-edit-share-post" rows="3" class="w-full bg-cyberBlack border border-gray-700 rounded-xl px-4 py-2 text-sm text-white focus:border-neonCyan focus:outline-none"></textarea>
+                    </div>
+                    <div class="space-y-3">
+                        <label class="block text-xs font-semibold text-gray-300">تعليمات الشحن والتحويل</label>
+                        <textarea id="admin-edit-deposit-instructions" rows="3" class="w-full bg-cyberBlack border border-gray-700 rounded-xl px-4 py-2 text-sm text-white focus:border-neonCyan focus:outline-none"></textarea>
+                    </div>
+                    <div class="space-y-3">
+                        <label class="block text-xs font-semibold text-gray-300">رقم الحساب / المحفظة للتحويل</label>
+                        <input type="text" id="admin-edit-payment-account" class="w-full bg-cyberBlack border border-gray-700 rounded-xl px-4 py-2 text-sm text-white focus:border-neonCyan focus:outline-none">
+                    </div>
+                    <div class="space-y-3">
+                        <label class="block text-xs font-semibold text-gray-300">رسالة تأكيد الدفع الناجح</label>
+                        <input type="text" id="admin-edit-success-msg" class="w-full bg-cyberBlack border border-gray-700 rounded-xl px-4 py-2 text-sm text-white focus:border-neonCyan focus:outline-none">
+                    </div>
+                    <button onclick="saveAdminTexts()" class="px-6 py-2.5 bg-neonCyan text-black font-bold rounded-xl text-xs hover:opacity-90 transition">حفظ التعديلات</button>
+                </div>
+
+                <!-- Tab 4: Millionaire Game Settings -->
+                <div id="admin-tab-game" class="space-y-4 hidden">
+                    <div class="space-y-3">
+                        <label class="block text-xs font-semibold text-gray-300">شرح لعبة المليونير</label>
+                        <textarea id="admin-edit-game-rules" rows="3" class="w-full bg-cyberBlack border border-gray-700 rounded-xl px-4 py-2 text-sm text-white focus:border-neonCyan focus:outline-none"></textarea>
+                    </div>
+                    <button onclick="saveAdminGameSettings()" class="px-6 py-2.5 bg-neonCyan text-black font-bold rounded-xl text-xs hover:opacity-90 transition">حفظ إعدادات اللعبة</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="bg-cyberDark border-t border-gray-800 py-6 text-center text-xs text-gray-500 mt-12">
+        <p>جميع الحقوق محفوظة © 2026 - رحلة المليونير | استثمار ذكي وأرباح مضمونة</p>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        /* ================= STATE MANAGEMENT ================= */
+        const DEFAULT_STATE = {
+            currentUser: null, // { name, phone, password, createdAt, lastDepositDate, activePackages: [], diamonds: 0, shareCount: 0 }
+            activeView: 'home', // 'home' or 'game'
+            deposits: [], // { id, userId, userName, type ('investment' or 'diamond'), amount, packageId, trxId, screenshot, status ('pending', 'approved', 'rejected'), date }
+            settings: {
+                shareLink: window.location.href,
+                sharePostText: "🚀 انضم الآن إلى رحلة المليونير واستثمر فلوسك صح من غير مجهود وأرباح مضمونة برأس مال بسيط! 💎 اشترك اليوم:\n",
+                depositInstructions: "قم بتحويل المبلغ المطلوبة إلى رقم المحفظة أو الحساب البنكي المعتمد، ثم ارفع صورة سكرين شوت التحويل وتأكيد العملية.",
+                paymentAccount: "فودافون كاش / إنستاباي: 01012345678",
+                successPaymentMsg: "سيتم تأكيد الدفع في خلال دقائق، تابع الصفحة الرئيسية لمعرفة بيانات حسابك.",
+                gameRules: "اللعب يتم من نفس الحساب الشخصي وبنفس الشروط. يجب أن يكون الحساب مسجلاً قبل شحن الجواهر. استمتع بالكيلو أرباح والجواهر اليومية المجانية!"
+            },
+            packages: [
+                { id: 'p1', name: 'باقة 250 جنيه', price: 250, hourlyReturn: 2 },
+                { id: 'p2', name: 'باقة 500 جنيه', price: 500, hourlyReturn: 5 },
+                { id: 'p3', name: 'باقة 1000 جنيه', price: 1000, hourlyReturn: 10 },
+                { id: 'p4', name: 'باقة 3000 جنيه', price: 3000, hourlyReturn: 35 },
+                { id: 'p5', name: 'باقة 6000 جنيه', price: 6000, hourlyReturn: 70 },
+                { id: 'p6', name: 'باقة 10,000 جنيه', price: 10000, hourlyReturn: 125 }
+            ],
+            diamondPackages: [
+                { diamonds: 10, price: 200 },
+                { diamonds: 20, price: 400 },
+                { diamonds: 30, price: 600 },
+                { diamonds: 40, price: 800 },
+                { diamonds: 50, price: 1000 },
+                { diamonds: 100, price: 2000 },
+                { diamonds: 500, price: 10000 },
+                { diamonds: 1000, price: 20000 }
+            ]
+        };
+
+        let appState = JSON.parse(localStorage.getItem('millionaire_journey_state')) || DEFAULT_STATE;
+
+        function saveState() {
+            localStorage.setItem('millionaire_journey_state', JSON.stringify(appState));
+        }
+
+        // Initialize App on Window Load
+        window.onload = function() {
+            checkAutoLoginPopup();
+            renderApp();
+            startLiveVisitorsTicker();
+            startProfitAndCountdownsEngine();
+        };
+
+        /* ================= UI RENDERING ================= */
+        function renderApp() {
+            // Render View Switcher
+            const switchBtn = document.getElementById('switch-text');
+            const switchIcon = document.getElementById('switch-icon');
+            if (appState.activeView === 'home') {
+                document.getElementById('home-view').classList.remove('hidden');
+                document.getElementById('game-view').classList.add('hidden');
+                switchBtn.innerText = 'لعبة المليونير';
+                switchIcon.innerText = '🎰';
+            } else {
+                document.getElementById('home-view').classList.add('hidden');
+                document.getElementById('game-view').classList.remove('hidden');
+                switchBtn.innerText = 'رحلة المليونير';
+                switchIcon.innerText = '💳';
+            }
+
+            // Auth button state
+            const authBtnLabel = document.getElementById('auth-btn-label');
+            if (appState.currentUser) {
+                authBtnLabel.innerText = appState.currentUser.name.split(' ')[0];
+            } else {
+                authBtnLabel.innerText = 'حسابي';
+            }
+
+            // Render Investment Store Packages
+            renderInvestmentStore();
+            // Render Diamond Packages
+            renderDiamondStore();
+            // Render Dashboard Data
+            renderDashboard();
+            // Render Admin settings if open
+            renderAdminData();
+        }
+
+        function togglePageView() {
+            appState.activeView = appState.activeView === 'home' ? 'game' : 'home';
+            saveState();
+            renderApp();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchPageView(viewName) {
+            appState.activeView = viewName;
+            saveState();
+            renderApp();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        /* ================= AUTH SYSTEM ================= */
+        function checkAutoLoginPopup() {
+            if (!appState.currentUser) {
+                setTimeout(() => {
+                    if (!appState.currentUser) {
+                        openAuthModal();
+                    }
+                }, 10000); // 10 seconds auto popup
+            }
+        }
+
+        function openAuthModal() {
+            document.getElementById('auth-modal').classList.remove('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+        }
+
+        function handleAuthSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('auth-name').value.trim();
+            const phone = document.getElementById('auth-phone').value.trim();
+            const password = document.getElementById('auth-password').value;
+            const confirmPass = document.getElementById('auth-password-confirm').value;
+            const terms = document.getElementById('auth-terms').checked;
+
+            if (password !== confirmPass) {
+                showModal('خطأ في كلمة السر', 'كلمة السر وتأكيدها غير مطابقتين.', '⚠️');
+                return;
+            }
+
+            if (!terms) {
+                showModal('شروط المشاركة', 'يجب الموافقة على شروط المشاركة والاستثمار.', '⚠️');
+                return;
+            }
+
+            // Save user to state & localStorage
+            appState.currentUser = {
+                name,
+                phone,
+                password,
+                createdAt: new Date().getTime(),
+                lastDepositDate: null,
+                activePackages: [],
+                diamonds: 1, // 1 free diamond on start
+                shareCount: 0
+            };
+
+            saveState();
+            closeAuthModal();
+            showModal('تم إنشاء الحساب بنجاح', 'مرحباً بك في رحلة المليونير! تم حفظ حسابك على الجهاز بنجاح.', '💎');
+            renderApp();
+        }
+
+        /* ================= SHARE SYSTEM & SECRET 10 COPIES ================= */
+        function handleShare() {
+            if (!appState.currentUser) {
+                showModal('تسجيل الدخول مطلوب', 'يرجى إنشاء حساب أو تسجيل الدخول أولاً لتتمكن من مشاركة الصفحة والحصول على الماسات 💎.', '👤');
+                openAuthModal();
+                return;
+            }
+
+            appState.currentUser.shareCount = (appState.currentUser.shareCount || 0) + 1;
+            
+            // Copy post to clipboard
+            const shareText = appState.settings.sharePostText + appState.settings.shareLink;
+            copyToClipboard(shareText);
+
+            // Secret condition: Only gives 1 diamond after 10 successful copies secretly
+            if (appState.currentUser.shareCount === 10) {
+                appState.currentUser.diamonds += 1;
+                appState.currentUser.shareCount = 0; // reset counter
+                saveState();
+                showModal('هدية سرية خاصة! 💎', 'لقد قمت بمشاركة الصفحة 10 مرات! تم إضافتك ماسة هدية 💎 إلى حسابك في لعبة المليونير.', '💎');
+            } else {
+                showModal('تم نسخ المنشور بنجاح', 'شارك المنشور مع أصدقائك لدعوتهم للاستثمار واللعب!', '🔗');
+            }
+            saveState();
+            renderApp();
+        }
+
+        function copyToClipboard(text) {
+            const dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+        }
+
+        /* ================= INVESTMENT STORE ================= */
+        let selectedItemForDeposit = null; // { type, packageId, amount }
+
+        function renderInvestmentStore() {
+            const container = document.getElementById('investment-packages-grid');
+            container.innerHTML = '';
+
+            appState.packages.forEach(pkg => {
+                const card = document.createElement('div');
+                card.className = 'bg-cyberDark rgb-border p-6 rounded-3xl flex flex-col justify-between shadow-rgb-box relative overflow-hidden group hover:scale-[1.02] transition';
+                card.innerHTML = `
+                    <div class="absolute -right-10 -top-10 w-32 h-32 bg-neonCyan/5 rounded-full blur-2xl group-hover:bg-neonCyan/15 transition"></div>
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-3xl">💳</span>
+                            <span class="px-3 py-1 bg-cyberBlack text-neonCyan text-xs font-bold rounded-full border border-gray-800">مدى الحياة</span>
+                        </div>
+                        <h4 class="text-xl font-bold mb-1 text-white">${pkg.name}</h4>
+                        <div class="text-2xl font-black rgb-text mb-4">${pkg.price} EGP</div>
+                        <div class="space-y-2 mb-6 text-xs text-gray-300">
+                            <div class="flex justify-between py-1 border-b border-gray-800">
+                                <span>العائد بالساعة:</span>
+                                <span class="text-neonGreen font-bold">+${pkg.hourlyReturn} جنيه / ساعة</span>
+                            </div>
+                            <div class="flex justify-between py-1 border-b border-gray-800">
+                                <span>مدة السحب:</span>
+                                <span class="text-neonYellow font-bold">بعد 3 أشهر</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="initiateDeposit('investment', '${pkg.id}', ${pkg.price})" class="w-full py-3 bg-gradient-to-r from-neonCyan to-neonPink text-black font-extrabold rounded-xl hover:opacity-90 transition shadow-neon-cyan">
+                        شراء الباقة الآن
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        /* ================= DIAMOND STORE ================= */
+        function renderDiamondStore() {
+            const container = document.getElementById('diamond-packages-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            appState.diamondPackages.forEach(dp => {
+                const card = document.createElement('div');
+                card.className = 'bg-cyberDark rgb-border p-4 rounded-2xl text-center flex flex-col justify-between shadow-rgb-box hover:scale-105 transition';
+                card.innerHTML = `
+                    <div>
+                        <div class="text-3xl mb-1">💎</div>
+                        <h5 class="text-base font-bold text-white mb-1">${dp.diamonds} جواهر</h5>
+                        <div class="text-neonCyan font-black text-lg mb-3">${dp.price} EGP</div>
+                    </div>
+                    <button onclick="initiateDeposit('diamond', null, ${dp.price}, ${dp.diamonds})" class="w-full py-2 bg-cyberBlack hover:bg-gray-800 border border-neonCyan text-neonCyan text-xs font-bold rounded-xl transition shadow-neon-cyan">
+                        شحن الجواهر
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+
+            // Update user diamond count display
+            const userDiamondEl = document.getElementById('user-diamonds-count');
+            if (userDiamondEl) {
+                userDiamondEl.innerText = appState.currentUser ? appState.currentUser.diamonds : 0;
+            }
+        }
+
+        function initiateDeposit(type, packageId, amount, diamondsCount = 0) {
+            if (!appState.currentUser) {
+                showModal('تسجيل الدخول مطلوب', 'يجب تسجيل الدخول أو إنشاء حساب أولاً لشراء الباقات وشحن الجواهر.', '👤');
+                openAuthModal();
+                return;
+            }
+
+            selectedItemForDeposit = { type, packageId, amount, diamondsCount };
+            
+            // Populate modal instructions
+            document.getElementById('admin-deposit-instructions').innerText = appState.settings.depositInstructions;
+            document.getElementById('admin-payment-account-display').innerText = appState.settings.paymentAccount;
+            
+            document.getElementById('deposit-modal').classList.remove('hidden');
+        }
+
+        function closeDepositModal() {
+            document.getElementById('deposit-modal').classList.add('hidden');
+            selectedItemForDeposit = null;
+        }
+
+        function handleDepositSubmit(e) {
+            e.preventDefault();
+            const trxId = document.getElementById('deposit-trx-id').value;
+            const screenshotInput = document.getElementById('deposit-screenshot');
+            
+            // Create deposit record
+            const newDeposit = {
+                id: 'dep_' + Date.now(),
+                userId: appState.currentUser.phone,
+                userName: appState.currentUser.name,
+                type: selectedItemForDeposit.type,
+                amount: selectedItemForDeposit.amount,
+                packageId: selectedItemForDeposit.packageId,
+                diamondsCount: selectedItemForDeposit.diamondsCount || 0,
+                trxId,
+                screenshot: screenshotInput.files[0] ? URL.createObjectURL(screenshotInput.files[0]) : 'https://placehold.co/400x300/12121c/00f0ff?text=Screenshot',
+                status: 'pending',
+                date: new Date().toLocaleDateString('ar-EG')
+            };
+
+            appState.deposits.push(newDeposit);
+            saveState();
+            closeDepositModal();
+
+            showModal('تم إرسال طلب الشحن', appState.settings.successPaymentMsg, '✅');
+            renderApp();
+        }
+
+        /* ================= DASHBOARD & PROFIT ENGINE ================= */
+        function renderDashboard() {
+            const statusBadge = document.getElementById('dashboard-status-badge');
+            const totalProfitEl = document.getElementById('dash-total-profit');
+            const hourlyRateEl = document.getElementById('dash-hourly-rate');
+            const activeContainer = document.getElementById('active-packages-container');
+
+            if (!appState.currentUser) {
+                statusBadge.innerText = 'غير مسجل الدخول';
+                statusBadge.className = 'px-3 py-1 bg-red-900/40 text-red-400 text-xs font-semibold rounded-full border border-red-700';
+                totalProfitEl.innerText = '0.00 EGP';
+                hourlyRateEl.innerText = '+0.00 EGP كل ساعة';
+                activeContainer.innerHTML = `
+                    <div class="col-span-full bg-cyberBlack/60 border border-gray-800 rounded-xl p-4 text-center text-gray-400 text-sm py-8">
+                        يرجى تسجيل الدخول لمتابعة رصيدك وباقاتك الفعالة.
+                    </div>
+                `;
+                return;
+            }
+
+            statusBadge.innerText = 'الحساب نشط';
+            statusBadge.className = 'px-3 py-1 bg-green-900/40 text-neonGreen text-xs font-semibold rounded-full border border-green-700';
+
+            // Calculate active packages & hourly return
+            let totalHourlyReturn = 0;
+            let activePkgs = appState.currentUser.activePackages || [];
+
+            activeContainer.innerHTML = '';
+            if (activePkgs.length === 0) {
+                activeContainer.innerHTML = `
+                    <div class="col-span-full bg-cyberBlack/60 border border-gray-800 rounded-xl p-4 text-center text-gray-400 text-sm py-8">
+                        لا توجد باقات فعالة حالياً. اشترِ باقة من المتجر أعلاه لتبدأ الأرباح بالتدفق!
+                    </div>
+                `;
+            } else {
+                activePkgs.forEach(ap => {
+                    const pkgData = appState.packages.find(p => p.id === ap.packageId) || { name: 'باقة استثمارية', hourlyReturn: 5 };
+                    totalHourlyReturn += pkgData.hourlyReturn;
+
+                    const div = document.createElement('div');
+                    div.className = 'bg-cyberBlack p-4 rounded-xl border border-gray-800 flex items-center justify-between';
+                    div.innerHTML = `
+                        <div>
+                            <h5 class="text-sm font-bold text-white">${pkgData.name}</h5>
+                            <span class="text-xs text-neonGreen">+${pkgData.hourlyReturn} جنيه / ساعة</span>
+                        </div>
+                        <span class="px-2.5 py-1 bg-green-900/20 text-neonGreen text-xs rounded-full border border-green-800">فعالة</span>
+                    `;
+                    activeContainer.appendChild(div);
+                });
+            }
+
+            hourlyRateEl.innerText = `+${totalHourlyReturn}.00 EGP كل ساعة`;
+        }
+
+        // Live Tickers & Profit accumulation engine
+        function startLiveVisitorsTicker() {
+            setInterval(() => {
+                const visitorsEl = document.getElementById('live-visitors');
+                if (visitorsEl) {
+                    let current = parseInt(visitorsEl.innerText.replace(/,/g, '')) || 842109;
+                    current += Math.floor(Math.random() * 7) - 3; // fluctuate slightly
+                    visitorsEl.innerText = current.toLocaleString();
+                }
+            }, 4000);
+        }
+
+        function startProfitAndCountdownsEngine() {
+            setInterval(() => {
+                if (!appState.currentUser) return;
+
+                // Check secret ban rule after 3 months (90 days) from first deposit
+                if (appState.currentUser.lastDepositDate) {
+                    const now = new Date().getTime();
+                    const threeMonthsMs = 90 * 24 * 60 * 60 * 1000;
+                    if (now - appState.currentUser.lastDepositDate > threeMonthsMs) {
+                        // Secret Ban without notification
+                        appState.currentUser = null;
+                        saveState();
+                        renderApp();
+                        showModal('تنبيه النظام', 'انتهت صلاحية الجلسة والحساب. يرجى مراجعة الدعم.', '⚠️');
+                        return;
+                    }
+                }
+
+                // Calculate hourly profit simulation
+                let activePkgs = appState.currentUser.activePackages || [];
+                if (activePkgs.length > 0) {
+                    let hourlySum = 0;
+                    activePkgs.forEach(ap => {
+                        const p = appState.packages.find(item => item.id === ap.packageId);
+                        if (p) hourlySum += p.hourlyReturn;
+                    });
+
+                    // Add per second fraction for visual live ticker
+                    appState.currentUser.profitBalance = (appState.currentUser.profitBalance || 0) + (hourlySum / 3600);
+                    saveState();
+
+                    const totalProfitEl = document.getElementById('dash-total-profit');
+                    if (totalProfitEl) {
+                        totalProfitEl.innerText = appState.currentUser.profitBalance.toFixed(2) + ' EGP';
+                    }
+                }
+
+                // Update countdown clocks
+                const now = new Date();
+                const nextHour = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + 1, 0, 0);
+                const diffSec = Math.floor((nextHour - now) / 1000);
+                const mm = String(Math.floor(diffSec / 60)).padStart(2, '0');
+                const ss = String(diffSec % 60).padStart(2, '0');
+                const countdownEl = document.getElementById('dash-hourly-countdown');
+                if (countdownEl) countdownEl.innerText = `00:${mm}:${ss}`;
+
+                // Withdrawal countdown (3 months after active package)
+                const withdrawalEl = document.getElementById('dash-withdrawal-countdown');
+                const withdrawalStatusEl = document.getElementById('dash-withdrawal-status');
+                if (withdrawalEl && appState.currentUser.lastDepositDate) {
+                    const targetTime = appState.currentUser.lastDepositDate + (90 * 24 * 60 * 60 * 1000);
+                    const remTime = targetTime - now.getTime();
+                    if (remTime > 0) {
+                        const days = Math.floor(remTime / (1000 * 60 * 60 * 24));
+                        const hours = Math.floor((remTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        withdrawalEl.innerText = `${days} يوم و ${hours} ساعة`;
+                        withdrawalStatusEl.innerText = 'متبقي على موعد السحب النهائي';
+                    } else {
+                        withdrawalEl.innerText = 'متاح للسحب الآن!';
+                        withdrawalStatusEl.innerText = 'يمكنك سحب الأرباح الكبرى';
+                    }
+                }
+
+            }, 1000);
+        }
+
+        /* ================= MILLIONAIRE GAME LOGIC ================= */
+        let isCardFlipped = false;
+
+        function flipLuckyCard() {
+            if (!appState.currentUser) {
+                showModal('تسجيل الدخول مطلوب', 'يجب تسجيل الدخول أولاً لتتمكن من اللعب وفتح كارت الحظ.', '👤');
+                openAuthModal();
+                return;
+            }
+
+            if (appState.currentUser.diamonds < 1) {
+                showModal('رصيد الجواهر غير كافٍ', 'تحتاج إلى جوهرة واحدة 💎 على الأقل لفتح كارت الحظ. اشحن جواهرك من الباقات أدناه!', '💎');
+                return;
+            }
+
+            // Deduct 1 diamond
+            appState.currentUser.diamonds -= 1;
+            saveState();
+            renderDiamondStore();
+
+            const cardInner = document.getElementById('lucky-card-inner');
+            if (!isCardFlipped) {
+                cardInner.classList.add('rotate-y-180');
+                isCardFlipped = true;
+
+                // Motivational messages variation
+                const motivationalMsgs = [
+                    "جرب حظك مرة أخرى! المليون ينتظر خطوتك القادمة.",
+                    "لم تبتسم لك الحظوظ هذه المرة، استمر في اللعب!",
+                    "أنت قريب جداً من الجائزة الكبرى، جرب مرة أخرى!",
+                    "الحظ يبتسم للشجعان، حاول مجدداً الآن."
+                ];
+                const randomMsg = motivationalMsgs[Math.floor(Math.random() * motivationalMsgs.length)];
+                document.getElementById('card-result-msg').innerText = randomMsg;
+
+                // Flip back automatically after 4 seconds
+                setTimeout(() => {
+                    cardInner.classList.remove('rotate-y-180');
+                    isCardFlipped = false;
+                }, 4000);
+            }
+        }
+
+        /* ================= SECRET ADMIN PANEL LOGIC ================= */
+        let adminTimer = null;
+        const adminTrigger = document.getElementById('admin-trigger');
+
+        // Secret long press for 10 seconds (NO visible seconds countdown timer!)
+        adminTrigger.addEventListener('mousedown', startAdminPress);
+        adminTrigger.addEventListener('touchstart', startAdminPress);
+        adminTrigger.addEventListener('mouseup', cancelAdminPress);
+        adminTrigger.addEventListener('mouseleave', cancelAdminPress);
+        adminTrigger.addEventListener('touchend', cancelAdminPress);
+
+        function startAdminPress(e) {
+            e.preventDefault();
+            adminTimer = setTimeout(() => {
+                promptAdminPassword();
+            }, 10000); // exactly 10 seconds long press
+        }
+
+        function cancelAdminPress() {
+            if (adminTimer) {
+                clearTimeout(adminTimer);
+                adminTimer = null;
+            }
+        }
+
+        function promptAdminPassword() {
+            const pass = prompt("أدخل كلمة سر الأدمن:");
+            if (pass === "191993") {
+                openAdminPanel();
+            } else if (pass !== null) {
+                showModal('كلمة السر خاطئة', 'كلمة السر غير صحيحة.', '❌');
+            }
+        }
+
+        function openAdminPanel() {
+            document.getElementById('admin-modal').classList.remove('hidden');
+            renderAdminData();
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('admin-modal').classList.add('hidden');
+        }
+
+        function switchAdminTab(tabName) {
+            document.getElementById('admin-tab-deposits').classList.add('hidden');
+            document.getElementById('admin-tab-packages').classList.add('hidden');
+            document.getElementById('admin-tab-texts').classList.add('hidden');
+            document.getElementById('admin-tab-game').classList.add('hidden');
+
+            document.getElementById('admin-tab-btn-deposits').className = 'px-4 py-2 bg-cyberBlack text-gray-300 font-bold rounded-xl text-xs border border-gray-700';
+            document.getElementById('admin-tab-btn-packages').className = 'px-4 py-2 bg-cyberBlack text-gray-300 font-bold rounded-xl text-xs border border-gray-700';
+            document.getElementById('admin-tab-btn-texts').className = 'px-4 py-2 bg-cyberBlack text-gray-300 font-bold rounded-xl text-xs border border-gray-700';
+            document.getElementById('admin-tab-btn-game').className = 'px-4 py-2 bg-cyberBlack text-gray-300 font-bold rounded-xl text-xs border border-gray-700';
+
+            document.getElementById(`admin-tab-${tabName}`).classList.remove('hidden');
+            document.getElementById(`admin-tab-btn-${tabName}`).className = 'px-4 py-2 bg-neonCyan text-black font-bold rounded-xl text-xs';
+        }
+
+        function renderAdminData() {
+            // Fill Texts inputs
+            document.getElementById('admin-edit-share-link').value = appState.settings.shareLink;
+            document.getElementById('admin-edit-share-post').value = appState.settings.sharePostText;
+            document.getElementById('admin-edit-deposit-instructions').value = appState.settings.depositInstructions;
+            document.getElementById('admin-edit-payment-account').value = appState.settings.paymentAccount;
+            document.getElementById('admin-edit-success-msg').value = appState.settings.successPaymentMsg;
+            document.getElementById('admin-edit-game-rules').value = appState.settings.gameRules;
+
+            // Fill Deposits list
+            const depList = document.getElementById('admin-deposits-list');
+            depList.innerHTML = '';
+            if (appState.deposits.length === 0) {
+                depList.innerHTML = '<div class="text-xs text-gray-500 text-center py-4">لا توجد طلبات شحن معلقة حالياً.</div>';
+            } else {
+                appState.deposits.forEach(dep => {
+                    const div = document.createElement('div');
+                    div.className = 'bg-cyberBlack p-4 rounded-xl border border-gray-800 flex flex-wrap items-center justify-between gap-4';
+                    div.innerHTML = `
+                        <div>
+                            <div class="text-sm font-bold text-white">${dep.userName} (${dep.userId})</div>
+                            <div class="text-xs text-neonCyan">النوع: ${dep.type === 'investment' ? 'باقة استثمارية' : 'شحن جواهر'} | المبلغ: ${dep.amount} EGP</div>
+                            <div class="text-xs text-gray-400">رقم المعاملة: ${dep.trxId} | التاريخ: ${dep.date}</div>
+                            <a href="${dep.screenshot}" target="_blank" class="text-xs text-neonPink underline block mt-1">عرض السكرين شوت المرفق</a>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            ${dep.status === 'pending' ? `
+                                <button onclick="approveDeposit('${dep.id}')" class="px-3 py-1.5 bg-green-600 hover:bg-green-500 text-black font-bold text-xs rounded-lg">قبول</button>
+                                <button onclick="rejectDeposit('${dep.id}')" class="px-3 py-1.5 bg-red-600 hover:bg-red-500 text-white font-bold text-xs rounded-lg">رفض</button>
+                            ` : `<span class="text-xs font-bold ${dep.status === 'approved' ? 'text-neonGreen' : 'text-red-400'}">${dep.status === 'approved' ? 'مقبول ✅' : 'مرفوض ❌'}</span>`}
+                        </div>
+                    `;
+                    depList.appendChild(div);
+                });
+            }
+
+            // Fill Packages list
+            const pkgList = document.getElementById('admin-packages-list');
+            pkgList.innerHTML = '';
+            appState.packages.forEach((pkg, index) => {
+                const div = document.createElement('div');
+                div.className = 'bg-cyberBlack p-4 rounded-xl border border-gray-800 flex flex-wrap items-center justify-between gap-4';
+                div.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm font-bold text-white">${pkg.name}</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div>
+                            <label class="block text-[10px] text-gray-400">السعر (EGP)</label>
+                            <input type="number" id="adm-pkg-price-${index}" value="${pkg.price}" class="w-24 bg-cyberDark border border-gray-700 rounded px-2 py-1 text-xs text-white">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-gray-400">العائد بالساعة</label>
+                            <input type="number" id="adm-pkg-return-${index}" value="${pkg.hourlyReturn}" class="w-24 bg-cyberDark border border-gray-700 rounded px-2 py-1 text-xs text-white">
+                        </div>
+                        <button onclick="updatePackageData(${index})" class="mt-4 px-3 py-1 bg-neonCyan text-black font-bold text-xs rounded">حفظ</button>
+                    </div>
+                `;
+                pkgList.appendChild(div);
+            });
+        }
+
+        function approveDeposit(depId) {
+            const dep = appState.deposits.find(d => d.id === depId);
+            if (dep) {
+                dep.status = 'approved';
+                
+                // If current user is the owner, activate package or add diamonds
+                if (appState.currentUser && appState.currentUser.phone === dep.userId) {
+                    appState.currentUser.lastDepositDate = new Date().getTime();
+                    if (dep.type === 'investment' && dep.packageId) {
+                        if (!appState.currentUser.activePackages) appState.currentUser.activePackages = [];
+                        appState.currentUser.activePackages.push({ packageId: dep.packageId, activatedAt: new Date().getTime() });
+                    } else if (dep.type === 'diamond') {
+                        appState.currentUser.diamonds = (appState.currentUser.diamonds || 0) + (dep.diamondsCount || 10) + 3; // +3 free diamonds bonus
+                    }
+                }
+
+                saveState();
+                renderAdminData();
+                renderApp();
+                showModal('تم قبول الشحن', 'تمت الموافقة على طلب الشحن بنجاح وتحديث بيانات الحساب.', '✅');
+            }
+        }
+
+        function rejectDeposit(depId) {
+            const dep = appState.deposits.find(d => d.id === depId);
+            if (dep) {
+                dep.status = 'rejected';
+                saveState();
+                renderAdminData();
+                showModal('تم رفض الشحن', 'تم رفض طلب الشحن.', '❌');
+            }
+        }
+
+        function updatePackageData(index) {
+            const newPrice = parseFloat(document.getElementById(`adm-pkg-price-${index}`).value);
+            const newReturn = parseFloat(document.getElementById(`adm-pkg-return-${index}`).value);
+            if (!isNaN(newPrice)) appState.packages[index].price = newPrice;
+            if (!isNaN(newReturn)) appState.packages[index].hourlyReturn = newReturn;
+            saveState();
+            renderApp();
+            showModal('تم التحديث', 'تم تعديل بيانات الباقة بنجاح.', '✅');
+        }
+
+        function saveAdminTexts() {
+            appState.settings.shareLink = document.getElementById('admin-edit-share-link').value;
+            appState.settings.sharePostText = document.getElementById('admin-edit-share-post').value;
+            appState.settings.depositInstructions = document.getElementById('admin-edit-deposit-instructions').value;
+            appState.settings.paymentAccount = document.getElementById('admin-edit-payment-account').value;
+            appState.settings.successPaymentMsg = document.getElementById('admin-edit-success-msg').value;
+            saveState();
+            showModal('تم الحفظ', 'تم تحديث النصوص والروابط بنجاح.', '✅');
+        }
+
+        function saveAdminGameSettings() {
+            appState.settings.gameRules = document.getElementById('admin-edit-game-rules').value;
+            document.getElementById('game-rules-desc').innerText = appState.settings.gameRules;
+            saveState();
+            showModal('تم الحفظ', 'تم تحديث إعدادات لعبة المليونير بنجاح.', '✅');
+        }
+
+        /* ================= MODAL HELPER (No alert()) ================= */
+        function showModal(title, message, icon = '💎') {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+            document.getElementById('modal-icon').innerText = icon;
+            document.getElementById('custom-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('custom-modal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
