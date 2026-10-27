@@ -230,7 +230,7 @@
                 <div id="explanation-items" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm md:text-base font-bold leading-relaxed"></div>
             </section>
 
-            <!-- Dashboard Box (Account validity box removed as requested) -->
+            <!-- Dashboard Box -->
             <section class="bg-cyberDark rgb-border p-6 md:p-8 rounded-3xl shadow-rgb-box relative">
                 <div class="flex items-center justify-between mb-6 flex-wrap gap-4 border-b border-gray-800 pb-4">
                     <div class="flex items-center gap-3">
@@ -257,9 +257,7 @@
 
                 <div>
                     <h3 class="text-base md:text-lg font-bold text-gray-200 mb-3">💳 الباقات الفعالة وسجل المعاملات:</h3>
-                    <div id="active-packages-list" class="space-y-3">
-                        <!-- Content dynamically injected -->
-                    </div>
+                    <div id="active-packages-list" class="space-y-3"></div>
                 </div>
             </section>
 
@@ -305,7 +303,7 @@
                 </p>
 
                 <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
-                    <!-- Season Diamonds Counter with Countdown -->
+                    <!-- Season Diamonds Counter -->
                     <div class="bg-cyberBlack px-5 py-2.5 rounded-2xl border border-neonCyan text-sm md:text-base font-bold flex flex-col items-center">
                         <div class="flex items-center gap-2">
                             <span>💎</span> جواهر الموسم: <span id="user-season-diamonds-display" class="text-neonCyan font-black text-lg md:text-xl">0</span>
@@ -313,7 +311,7 @@
                         <div class="text-xs text-gray-400 mt-0.5">تأتي كل ساعة (<span id="season-diamond-timer" class="text-neonYellow">00:00:00</span>) - تختفي بنهاية الموسم</div>
                     </div>
                     
-                    <!-- Basic Diamonds Counter (Gold Color) -->
+                    <!-- Basic Diamonds Counter -->
                     <div class="bg-cyberBlack px-5 py-2.5 rounded-2xl border border-goldMain text-sm md:text-base font-bold flex items-center gap-2 shadow-gold-glow">
                         <span class="text-goldMain">💎</span> <span class="text-gray-300">جواهر الأساسية:</span> <span id="user-basic-diamonds-display" class="text-goldMain font-black text-lg md:text-xl">0</span>
                     </div>
@@ -326,8 +324,6 @@
 
             <!-- Card Opening Section -->
             <section class="flex flex-col items-center justify-center space-y-6">
-                
-                <!-- Batch Opening Selector (1, 2, 3, 5, 10, 20, 30, 40, 50, 100) -->
                 <div class="flex items-center gap-3 bg-cyberDark px-4 py-2.5 rounded-2xl border border-gray-800 text-sm md:text-base font-bold">
                     <span class="text-gray-300">فتح الكروت دفعة واحدة:</span>
                     <select id="card-batch-select" class="w-28 bg-cyberBlack border border-neonCyan text-neonCyan font-black text-center rounded-xl py-1.5 outline-none cursor-pointer">
@@ -344,10 +340,8 @@
                     </select>
                 </div>
 
-                <!-- Starry RGB Twinkling Card -->
                 <div class="perspective-1000 w-full max-w-sm h-96 cursor-pointer" onclick="playLuckyCardGame()">
                     <div id="lucky-card-inner" class="relative w-full h-full transform-style-3d rounded-3xl">
-                        
                         <!-- Front Face -->
                         <div class="absolute inset-0 starry-rgb-card rgb-border rounded-3xl p-8 flex flex-col items-center justify-center text-center backface-hidden shadow-rgb-box">
                             <h3 class="text-5xl md:text-6xl font-black font-amiri rgb-text tracking-widest mb-6">مليونير</h3>
@@ -363,7 +357,6 @@
                                 لم تحصل على الجائزه الكبرى ولاكن حصلت على الماس وعملات فلوس حظ سعيد مره اخرى
                             </p>
                         </div>
-
                     </div>
                 </div>
 
@@ -372,7 +365,7 @@
                 </div>
             </section>
 
-            <!-- Recharge Diamonds Store (Gold Diamonds) -->
+            <!-- Recharge Diamonds Store -->
             <section class="space-y-4">
                 <div class="text-center">
                     <h3 class="text-2xl font-black rgb-text">شحن باقات الجواهر الأساسية الذهبية 💎</h3>
@@ -411,7 +404,7 @@
         </div>
     </div>
 
-    <!-- Deposit Modal (With Screenshot Upload & Transfer Number) -->
+    <!-- Deposit Modal -->
     <div id="deposit-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md hidden">
         <div class="bg-cyberDark rgb-border p-6 md:p-8 rounded-3xl max-w-md w-full mx-4 shadow-rgb-box relative text-sm md:text-base font-bold">
             <button onclick="closeDepositModal()" class="absolute left-4 top-4 text-gray-400 text-xl">✕</button>
@@ -443,6 +436,16 @@
             <div class="flex items-center justify-between pb-4 border-b border-gray-800 mb-4">
                 <h3 class="text-lg md:text-xl font-black rgb-text">🔐 لوحة التحكم السرية للأدمن - مليونير</h3>
                 <button onclick="closeAdminPanel()" class="text-gray-400 hover:text-white text-xl">✕</button>
+            </div>
+
+            <!-- MANDATORY SERVER EXPORT BUTTON AT TOP -->
+            <div class="mb-4 bg-cyberBlack p-3 rounded-2xl border border-neonCyan flex items-center justify-between flex-wrap gap-2">
+                <div class="text-xs md:text-sm text-neonCyan font-black">
+                    💡 بعد تعديل أي إعدادات، اضغط هنا لتنزيل كود الخادم المعادل واستبداله بالموقع فوراً:
+                </div>
+                <button onclick="exportUpdatedServerHTML()" class="px-5 py-2.5 bg-gradient-to-r from-neonGreen to-neonCyan text-black font-black rounded-xl text-sm shadow-neon-green hover:scale-105 transition">
+                    📥 تصدير الكود المحدث للرفع على الخادم (إجباري)
+                </button>
             </div>
 
             <!-- Standalone Section Tabs -->
@@ -572,7 +575,7 @@
 
     <!-- Main Logic Script -->
     <script>
-        const STORAGE_KEY = 'millionaire_ultimate_v19';
+        const STORAGE_KEY = 'millionaire_ultimate_v20';
         const LAST_VISIT_KEY = 'millionaire_last_visit_time';
 
         const DEFAULT_STATE = {
@@ -622,7 +625,20 @@
             ]
         };
 
-        let appState = JSON.parse(localStorage.getItem(STORAGE_KEY)) || DEFAULT_STATE;
+        // Automatic Smart Sync with Local User States
+        let localSaved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        let appState = localSaved || JSON.parse(JSON.stringify(DEFAULT_STATE));
+
+        // Always sync global admin configs from DEFAULT_STATE to local device
+        appState.gameSubscriptionPrice = DEFAULT_STATE.gameSubscriptionPrice;
+        appState.gameRequiredCoins = DEFAULT_STATE.gameRequiredCoins;
+        appState.gamePrizeAmount = DEFAULT_STATE.gamePrizeAmount;
+        appState.gameDays = DEFAULT_STATE.gameDays;
+        appState.rgbConfig = DEFAULT_STATE.rgbConfig;
+        appState.settings = DEFAULT_STATE.settings;
+        appState.guides = DEFAULT_STATE.guides;
+        appState.packages = DEFAULT_STATE.packages;
+        appState.diamondPackages = DEFAULT_STATE.diamondPackages;
 
         function saveState() {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
@@ -707,7 +723,6 @@
             r.style.setProperty('--rgb-c6', rgb.c6);
         }
 
-        // Season Diamonds Award System (3 diamonds every hour upon subscription)
         function checkAndAwardSeasonDiamonds() {
             if (!appState.currentUser || !appState.currentUser.gameSubscribed) return;
             const now = Date.now();
@@ -734,7 +749,7 @@
                 
                 (appState.usersList || []).forEach(u => {
                     u.gameSubscribed = false;
-                    u.seasonDiamonds = 0; // Season diamonds disappear with season end
+                    u.seasonDiamonds = 0;
                 });
 
                 if (appState.currentUser) {
@@ -1104,7 +1119,6 @@
             }, 1000);
         }
 
-        // Card Opening Logic with Required Message & Basic/Season Diamonds deduction
         let isCardFlipping = false;
         function playLuckyCardGame() {
             if (!appState.currentUser) {
@@ -1123,7 +1137,6 @@
             const selectBox = document.getElementById('card-batch-select');
             const count = parseInt(selectBox.value) || 1;
 
-            // Priority deduction: Season diamonds first, then basic diamonds
             let totalAvailableDiamonds = (appState.currentUser.seasonDiamonds || 0) + (appState.currentUser.basicDiamonds || 0);
 
             if (totalAvailableDiamonds < count) {
@@ -1131,7 +1144,6 @@
                 return;
             }
 
-            // Deduct from season diamonds first, then basic
             let deductSeason = Math.min(appState.currentUser.seasonDiamonds || 0, count);
             let deductBasic = count - deductSeason;
 
@@ -1169,7 +1181,6 @@
             }, 6000);
         }
 
-        // Mandatory Share Modal Logic (Without count or prizes, mandatory platform choice, thank you note)
         function openShareModal() {
             if (!appState.currentUser) {
                 showToast('يلزم تسجيل الدخول للمشاركة والدعم');
@@ -1210,7 +1221,6 @@
             showModal('شكراً لدعمك لمنصة المليونير 🌟', 'شكراً لمشاركتك المنشور ودعمك المستمر لمنصة المليونير العالمية!', '🙏');
         }
 
-        // Secret Admin Entrance Trigger (Long press 10s without visible text)
         function setupSecretAdminPress() {
             const trigger = document.getElementById('admin-trigger-zone');
             let timer = null;
@@ -1259,7 +1269,6 @@
             const rgb = appState.rgbConfig || DEFAULT_STATE.rgbConfig;
             for (let i = 1; i <= 6; i++) { document.getElementById(`adm-rgb-${i}`).value = rgb[`c${i}`]; }
 
-            // Render Investment Packages Editor in Admin
             const invEditor = document.getElementById('adm-investment-packages-editor');
             invEditor.innerHTML = '';
             appState.packages.forEach((pkg, idx) => {
@@ -1273,7 +1282,6 @@
                 `;
             });
 
-            // Render Diamond Packages Editor in Admin
             const diaEditor = document.getElementById('adm-diamond-packages-editor');
             diaEditor.innerHTML = '';
             appState.diamondPackages.forEach((dp, idx) => {
@@ -1406,7 +1414,7 @@
                 if (user) {
                     if (dep.type === 'investment') {
                         user.activePackages = user.activePackages || [];
-                        user.activePackages.pyPush ? '' : user.activePackages.push({ pkgId: dep.pkgId });
+                        user.activePackages.push({ pkgId: dep.pkgId });
                     } else if (dep.type === 'diamond') {
                         user.basicDiamonds = (user.basicDiamonds || 0) + dep.diamonds;
                     } else if (dep.type === 'game_sub') {
@@ -1426,6 +1434,46 @@
         function deleteUser(idx) {
             appState.usersList.splice(idx, 1);
             saveState(); renderAdminData(); showToast('تم حذف المستخدم بنجاح');
+        }
+
+        // Export Entire HTML with current Admin State embedded as Server Default
+        function exportUpdatedServerHTML() {
+            saveAdminSettings();
+            
+            // Generate clean JSON state to replace DEFAULT_STATE
+            const exportState = {
+                currentUser: null,
+                usersList: [],
+                activePage: 'journey',
+                deposits: [],
+                gameSubscriptionPrice: appState.gameSubscriptionPrice,
+                gameRequiredCoins: appState.gameRequiredCoins,
+                gamePrizeAmount: appState.gamePrizeAmount,
+                gameDays: appState.gameDays,
+                seasonEndTimestamp: appState.seasonEndTimestamp,
+                subscriberMin: appState.subscriberMin,
+                subscriberMax: appState.subscriberMax,
+                currentSubscribers: appState.currentSubscribers,
+                lastSubUpdateTimestamp: Date.now(),
+                rgbConfig: appState.rgbConfig,
+                settings: appState.settings,
+                guides: appState.guides,
+                packages: appState.packages,
+                diamondPackages: appState.diamondPackages
+            };
+
+            const fullHtml = document.documentElement.outerHTML;
+            const updatedHtml = fullHtml.replace(
+                /const DEFAULT_STATE = {[\s\S]*?};/,
+                `const DEFAULT_STATE = ${JSON.stringify(exportState, null, 12)};`
+            );
+
+            const blob = new Blob(["<!DOCTYPE html>\n" + updatedHtml], { type: 'text/html;charset=utf-8' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'index.html';
+            a.click();
+            showToast('تم تصدير ملف index.html بالداتا المحدثة بنجاح! ارفعه الآن إلى الخادم.');
         }
 
         function showToast(msg) {
