@@ -1,0 +1,2235 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>مليونير | Millionaire</title>
+  
+  <!-- خطوط عربية عصرية فائقة الدقة -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;800&family=Tajawal:wght@200;300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --bg-base: #121418;
+      --bg-secondary: #1c1f26;
+      --bg-opacity: 0.96;
+      --particle-opacity: 0.35;
+      --infinity-speed: 2.2s;
+      --logo-speed: 9s;
+      --live-speed: 2.5s;
+      --card-border-speed: 14s;
+      --card-bg-speed: 22s;
+      --rgb-gradient: linear-gradient(90deg, #ff0055, #ff7700, #ffdd00, #00ff88, #00ccff, #7700ff, #ff00c8, #ff0055);
+      --rgb-conic: conic-gradient(from var(--angle, 0deg), #ff0055, #ff7700, #ffdd00, #00ff88, #00ccff, #7700ff, #ff00c8, #ff0055);
+    }
+
+    @property --angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+      background-color: var(--bg-base);
+      color: #f3f4f6;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* طبقة الخلفية السلفر المعدنية فائقة الدقة 8K */
+    .metallic-silver-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 80% 85%, rgba(160, 175, 200, 0.05) 0%, transparent 50%),
+        linear-gradient(135deg, var(--bg-base) 0%, var(--bg-secondary) 50%, var(--bg-base) 100%);
+      opacity: var(--bg-opacity);
+      transition: background 0.5s ease, opacity 0.4s ease;
+    }
+
+    /* شبكة مجهرية لإعطاء ملمس معدني 8K */
+    .metallic-grid-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    /* كانفاس جزيئات الخلفية RGB */
+    #bgCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      opacity: var(--particle-opacity);
+      transition: opacity 0.4s ease;
+    }
+
+    /* تحريك الألوان RGB */
+    @keyframes rgbFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes rgbRotate {
+      0% { --angle: 0deg; }
+      100% { --angle: 360deg; }
+    }
+
+    /* نص RGB فائق الدقة */
+    .rgb-text-infinity {
+      background: var(--rgb-gradient);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: rgbFlow var(--infinity-speed) linear infinite;
+      filter: drop-shadow(0 0 12px rgba(0, 220, 255, 0.35));
+    }
+
+    .rgb-text-logo {
+      background: var(--rgb-gradient);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: rgbFlow var(--logo-speed) linear infinite;
+      filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.15));
+    }
+
+    .rgb-text-live {
+      background: var(--rgb-gradient);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: rgbFlow var(--live-speed) linear infinite;
+    }
+
+    /* إطار RGB متوسط الحجم بحركة بطيئة جداً لكل خانة */
+    .rgb-card-wrapper {
+      position: relative;
+      border-radius: 1.5rem;
+      padding: 2.5px; /* خط متوسط الحجم */
+      background: var(--rgb-conic);
+      animation: rgbRotate var(--card-border-speed) linear infinite;
+      box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.75), 0 0 20px rgba(255, 255, 255, 0.03);
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+    }
+
+    .rgb-card-wrapper:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 50px -10px rgba(0, 0, 0, 0.85), 0 0 28px rgba(0, 229, 255, 0.14);
+    }
+
+    .rgb-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: calc(1.5rem - 2.5px);
+      background: linear-gradient(155deg, rgba(24, 27, 34, 0.96) 0%, rgba(16, 18, 23, 0.98) 100%);
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* خلفية أيقونة RGB بطيئة جداً داخل كل خانة */
+    .card-rgb-watermark {
+      position: absolute;
+      inset: -30%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13rem;
+      font-weight: 200;
+      background: var(--rgb-gradient);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      opacity: 0.06;
+      animation: rgbFlow var(--card-bg-speed) linear infinite;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    /* إطار زر مباشر */
+    .live-badge-border {
+      position: relative;
+      border-radius: 9999px;
+      padding: 1.5px;
+      background: var(--rgb-conic);
+      animation: rgbRotate var(--live-speed) linear infinite;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .live-badge-inner {
+      background: rgba(18, 20, 24, 0.92);
+      border-radius: 9999px;
+      padding: 0.3rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* مؤشر الضوء الأخضر المتوهج لطلب السحب المفعل */
+    @keyframes greenPulse {
+      0%, 100% {
+        box-shadow: 0 0 8px #00ff88, 0 0 18px #00ff88;
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 14px #00ff88, 0 0 28px #00ff88;
+        transform: scale(1.15);
+      }
+    }
+
+    .active-green-led {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background-color: #00ff88;
+      display: inline-block;
+      animation: greenPulse 1.6s infinite ease-in-out;
+    }
+
+    /* منع تحديد النص أثناء الضغط السري المطول */
+    .secret-trigger {
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+      cursor: pointer;
+    }
+
+    /* السحابات الإشعارية العليا فوق كل شيء ولا تختفي إلا بـ X */
+    .top-cloud-stack {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 99999;
+      width: min(94vw, 540px);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .cloud-notification {
+      pointer-events: auto;
+      background: linear-gradient(145deg, rgba(26, 30, 38, 0.98), rgba(15, 17, 22, 0.99));
+      border: 1.5px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 212, 255, 0.25);
+      border-radius: 1.25rem;
+      padding: 1rem 1.25rem;
+      backdrop-filter: blur(18px);
+      animation: cloudSlideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes cloudSlideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-25px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* شريط تمرير أنيق */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #101216;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2f3542;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #4b5563;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- الخلفية السلفر الغامق وجزيئات RGB -->
+  <div class="metallic-silver-bg"></div>
+  <div class="metallic-grid-overlay"></div>
+  <canvas id="bgCanvas"></canvas>
+
+  <!-- حاوية السحابات الإشعارية العلوية (فوق أي سحابة أخرى وتغلق فقط من X) -->
+  <div id="topCloudStack" class="top-cloud-stack" aria-live="polite"></div>
+
+  <!-- المحتوى الرئيسي -->
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-20">
+    
+    <!-- الجزء العلوي الموحد (Header) -->
+    <header class="flex flex-col items-center justify-center text-center pt-2 pb-8">
+      
+      <!-- 1. أيقونة الموقع: علامة إنفينيتي نحيفة RGB بحركة سريعة -->
+      <div class="select-none leading-none mb-1" aria-hidden="true">
+        <span class="rgb-text-infinity font-extralight text-6xl sm:text-7xl md:text-8xl tracking-tight inline-block">∞</span>
+      </div>
+
+      <!-- 2. شعار الموقع: كلمة مليونير بخط نحيف RGB بحركة بطيئة (ضغط 10 ثوانٍ سري لفتح الأدمن) -->
+      <h1 id="secretAdminTrigger"
+          class="secret-trigger rgb-text-logo font-extralight text-4xl sm:text-5xl md:text-6xl tracking-wide py-1 px-4"
+          title="">
+        مليونير
+      </h1>
+
+      <!-- 3. أيقونة كلمة مباشر بخط نحيف RGB بحركة سريعة (ضغط 10 ثوانٍ سري لتوليد نسخة index.html) -->
+      <div class="mt-3">
+        <div id="secretExportTrigger" class="secret-trigger live-badge-border shadow-lg">
+          <div class="live-badge-inner">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span class="rgb-text-live font-light text-base sm:text-lg tracking-wider">مباشر</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. أسفل كلمة مباشر: زر إنشاء حساب أو ترحيب باسم اللاعب -->
+      <div id="playerHeaderArea" class="mt-6 flex flex-col items-center">
+        <!-- يتم تعبئته ديناميكياً via JS -->
+      </div>
+    </header>
+
+    <!-- لافتة إيقاف الموقع مؤقتاً (تظهر فقط عند انتهاء الدورة وتفعيل الإيقاف من الأدمن) -->
+    <section id="maintenanceBanner" class="hidden mb-8">
+      <div class="rgb-card-wrapper max-w-3xl mx-auto">
+        <div class="rgb-card-inner p-6 sm:p-8 text-center">
+          <div class="card-rgb-watermark">∞</div>
+          <div class="relative z-10 flex flex-col items-center gap-3">
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/15 border border-amber-400/40 text-amber-300 text-sm font-semibold">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
+              تحديث النظام
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-wide">انتظرونا قريباً</h2>
+            <p id="maintenanceResumeText" class="text-gray-300 text-sm sm:text-base"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- خانة شرح اللعبة في منتصف الصفحة الرئيسية -->
+    <section class="mb-10 max-w-4xl mx-auto">
+      <div class="rgb-card-wrapper">
+        <div class="rgb-card-inner p-6 sm:p-8 text-center">
+          <div class="card-rgb-watermark">∞</div>
+          <div class="relative z-10">
+            <p id="gameDescriptionDisplay" class="text-gray-200 text-base sm:text-lg md:text-xl font-light leading-relaxed sm:leading-loose">
+              <!-- النص القابل للتعديل من الأدمن -->
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- شبكة خانات السحب (الخانة المثبتة + الخانات الإضافية) -->
+    <main>
+      <div id="drawsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+        <!-- يتم توليد الخانات ديناميكياً -->
+      </div>
+    </main>
+
+  </div>
+
+  <!-- ==================== النوافذ المنبثقة (Modals) ==================== -->
+
+  <!-- 1. نافذة إنشاء حساب اللاعب -->
+  <div id="registerModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-4 overflow-y-auto">
+    <div class="rgb-card-wrapper w-full max-w-md my-auto">
+      <div class="rgb-card-inner p-6 sm:p-7">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-5">
+          <h3 class="text-xl font-bold text-white flex items-center gap-2">
+            <span class="rgb-text-infinity text-2xl">∞</span>
+            إنشاء حساب جديد
+          </h3>
+          <button type="button" onclick="closeModal('registerModal')" class="w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 text-gray-300 flex items-center justify-center transition">✕</button>
+        </div>
+
+        <form id="registerForm" class="space-y-4">
+          <div>
+            <label class="block text-sm text-gray-300 mb-1.5">الاسم بالكامل الموثق في الإثبات الشخصي</label>
+            <input type="text" id="regFullName" required placeholder="أدخل اسمك الرباعي كما في البطاقة"
+                   class="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/15 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition" />
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-300 mb-1.5">العنوان</label>
+            <input type="text" id="regAddress" required placeholder="المحافظة - المدينة - الشارع"
+                   class="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/15 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition" />
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-300 mb-1.5">رقم الهاتف</label>
+            <input type="tel" id="regPhone" required placeholder="01xxxxxxxxx"
+                   class="w-full px-4 py-3 rounded-xl bg-black/50 border border-white/15 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition text-right" dir="ltr" />
+          </div>
+
+          <div class="p-3 rounded-xl bg-cyan-500/10 border border-cyan-400/25 text-cyan-200 text-xs sm:text-sm text-center font-medium">
+            سيتم التواصل معك عند الفوز
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-white/5 border border-white/10">
+            <p class="text-xs sm:text-sm text-gray-200 mb-3 text-center leading-relaxed">
+              بالضغط على إنشاء حساب أنت توافق على استخدام الأموال داخل الموقع
+            </p>
+            <div class="grid grid-cols-2 gap-3">
+              <button type="submit" id="btnAgreeRegister"
+                      class="py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-sm shadow-lg transition cursor-pointer">
+                موافق (إنشاء حساب)
+              </button>
+              <button type="button" onclick="rejectRegistration()"
+                      class="py-2.5 px-4 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 font-semibold text-sm transition cursor-pointer">
+                رفض
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. نافذة تأكيد تسجيل الخروج وحذف الحساب -->
+  <div id="logoutConfirmModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-4">
+    <div class="rgb-card-wrapper w-full max-w-md">
+      <div class="rgb-card-inner p-6 text-center">
+        <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-rose-500/15 border border-rose-500/40 flex items-center justify-center text-rose-400 text-2xl">
+          ⚠
+        </div>
+        <h3 class="text-lg font-bold text-white mb-2">تحذير حذف الحساب</h3>
+        <p class="text-gray-300 text-sm leading-relaxed mb-6">
+          عند تسجيل الخروج وحذف الحساب ستفقد كل بياناتك من الموقع بالكامل. هل ترغب في تسجيل الخروج وحذف الحساب؟
+        </p>
+        <div class="grid grid-cols-2 gap-3">
+          <button type="button" onclick="confirmDeleteAccount()"
+                  class="py-3 px-4 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-sm transition cursor-pointer">
+            نعم، احذف الحساب
+          </button>
+          <button type="button" onclick="closeModal('logoutConfirmModal')"
+                  class="py-3 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm transition cursor-pointer">
+            إلغاء
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. نافذة المشاركة الخاصة بالخانة المثبتة (السحب المجاني) -->
+  <div id="pinnedShareModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-4 overflow-y-auto">
+    <div class="rgb-card-wrapper w-full max-w-lg my-auto">
+      <div class="rgb-card-inner p-6 sm:p-7">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
+          <h3 id="pinnedModalTitle" class="text-lg sm:text-xl font-bold text-white">السحب المجاني</h3>
+          <button type="button" onclick="closeModal('pinnedShareModal')" class="w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 text-gray-300 flex items-center justify-center transition">✕</button>
+        </div>
+
+        <!-- المنشور الدعائي القابل للنسخ -->
+        <div class="bg-black/50 border border-white/15 rounded-2xl p-4 mb-4">
+          <p id="promoPostTextDisplay" class="text-gray-200 text-sm leading-relaxed whitespace-pre-line mb-3"></p>
+          <div class="flex items-center justify-between gap-2 bg-white/5 rounded-xl p-2.5 border border-white/10">
+            <span id="promoLinkDisplay" class="text-cyan-400 text-xs sm:text-sm truncate font-mono" dir="ltr"></span>
+            <button type="button" onclick="copyPromoPost()"
+                    class="shrink-0 px-3.5 py-1.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/35 border border-cyan-400/40 text-cyan-200 text-xs font-bold transition cursor-pointer">
+              نسخ المنشور والرابط
+            </button>
+          </div>
+        </div>
+
+        <!-- حالة الانتظار 3 ثوانٍ قبل الانتقال للمنصة -->
+        <div id="shareRedirectNotice" class="hidden mb-4 p-3.5 rounded-xl bg-emerald-500/15 border border-emerald-400/40 text-emerald-200 text-sm text-center font-semibold animate-pulse">
+          جاري الموافقة على السحب بعد إتمام المشاركة...
+        </div>
+
+        <!-- أزرار منصات المشاركة -->
+        <div id="sharePlatformsContainer" class="grid grid-cols-2 sm:grid-cols-2 gap-3">
+          <!-- يتم توليدها من إعدادات الأدمن -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. نافذة الدفع وإرفاق إثبات التحويل للخانات المدفوعة -->
+  <div id="paidDrawModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-4 overflow-y-auto">
+    <div class="rgb-card-wrapper w-full max-w-lg my-auto">
+      <div class="rgb-card-inner p-6 sm:p-7">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
+          <div>
+            <h3 id="paidModalTitle" class="text-lg sm:text-xl font-bold text-white"></h3>
+            <p id="paidModalPrice" class="text-emerald-400 text-sm font-bold mt-0.5"></p>
+          </div>
+          <button type="button" onclick="closeModal('paidDrawModal')" class="w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 text-gray-300 flex items-center justify-center transition">✕</button>
+        </div>
+
+        <!-- بيانات التحويل المالي -->
+        <div class="bg-black/50 border border-white/15 rounded-2xl p-4 mb-4 space-y-2.5">
+          <div class="flex items-center justify-between text-xs sm:text-sm text-gray-300">
+            <span>طريقة التحويل:</span>
+            <span class="font-bold text-rose-400">فودافون كاش</span>
+          </div>
+          <div class="flex items-center justify-between text-xs sm:text-sm text-gray-300">
+            <span>الدولة / الكود الدولي:</span>
+            <span id="paymentCountryDisplay" class="font-semibold text-white">مصر (+2)</span>
+          </div>
+          <div class="pt-1">
+            <span class="block text-xs text-gray-400 mb-1">رقم التحويل المعتمد:</span>
+            <div class="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl p-2.5">
+              <span id="paymentNumberDisplay" class="text-lg font-bold tracking-wider text-cyan-300 font-mono" dir="ltr">01011234247</span>
+              <button type="button" onclick="copyPaymentNumber()"
+                      class="px-3.5 py-1.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/35 border border-cyan-400/40 text-cyan-200 text-xs font-bold transition cursor-pointer">
+                نسخ الرقم
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- رفع سكرين شوت التحويل -->
+        <form id="paidSubmitForm" class="space-y-4">
+          <div>
+            <label class="block text-sm text-gray-200 font-semibold mb-2">إرفاق سكرين شوت التحويل المالي (جميع صيغ الصور)</label>
+            <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 hover:border-cyan-400/60 rounded-2xl bg-black/30 cursor-pointer transition overflow-hidden relative">
+              <div id="uploadPlaceholder" class="flex flex-col items-center justify-center p-4 text-center">
+                <span class="text-2xl mb-1">📷</span>
+                <span class="text-xs sm:text-sm text-gray-300">اضغط لاختيار صورة إيصال التحويل</span>
+              </div>
+              <img id="screenshotPreview" src="" alt="معاينة الإيصال" class="hidden w-full h-full object-contain bg-black/70" />
+              <input type="file" id="screenshotInput" accept="image/*" required class="hidden" onchange="handleScreenshotPreview(event)" />
+            </label>
+          </div>
+
+          <!-- تحذير صارم قبل الإرسال -->
+          <div class="p-3 rounded-xl bg-rose-500/15 border border-rose-500/40 text-rose-300 text-xs sm:text-sm text-center font-bold">
+            ⚠ تحذير: سيتم حظر حسابك وجهازك نهائياً عند إرسال تحويل مالي مزيف
+          </div>
+
+          <button type="submit"
+                  class="w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-600 hover:brightness-110 text-white font-bold text-base shadow-lg transition cursor-pointer">
+            إرسال طلب السحب
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. نافذة إدخال كلمة سر الأدمن السرية -->
+  <div id="adminAuthModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-md p-4">
+    <div class="rgb-card-wrapper w-full max-w-sm">
+      <div class="rgb-card-inner p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 id="adminAuthTitle" class="text-lg font-bold text-white">التحقق الأمني</h3>
+          <button type="button" onclick="closeModal('adminAuthModal')" class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/15 text-gray-300 flex items-center justify-center">✕</button>
+        </div>
+        <form id="adminAuthForm" class="space-y-4">
+          <input type="password" id="adminPasswordInput" required placeholder="أدخل كلمة المرور"
+                 class="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 text-white text-center tracking-widest focus:outline-none focus:border-cyan-400" />
+          <button type="submit"
+                  class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-sm shadow-lg cursor-pointer">
+            تأكيد الدخول
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. لوحة تحكم الأدمن السرية الموحدة -->
+  <div id="adminDashboardModal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-xl overflow-y-auto p-3 sm:p-6">
+    <div class="max-w-6xl mx-auto pb-16">
+      <!-- شريط علوي للأدمن -->
+      <div class="rgb-card-wrapper mb-6">
+        <div class="rgb-card-inner p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <span class="rgb-text-infinity text-3xl font-light">∞</span>
+            <div>
+              <h2 class="text-xl sm:text-2xl font-bold text-white">لوحة تحكم الأدمن الموحدة</h2>
+              <p class="text-xs text-gray-400">تحكم شامل في الإعدادات، الوقت، الألوان، وخانات السحب</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <button type="button" onclick="exportUpdatedIndexHtml()"
+                    class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-bold shadow transition cursor-pointer">
+              ⬇ توليد نسخة index.html
+            </button>
+            <button type="button" onclick="closeModal('adminDashboardModal')"
+                    class="px-4 py-2.5 rounded-xl bg-rose-600/80 hover:bg-rose-600 text-white text-xs sm:text-sm font-bold transition cursor-pointer">
+              إغلاق ✕
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- شبكة أقسام التحكم -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- القسم 1: التحكم في تشغيل/إيقاف الموقع والعداد التنازلي -->
+        <div class="rgb-card-wrapper">
+          <div class="rgb-card-inner p-5 sm:p-6 space-y-4">
+            <h3 class="text-lg font-bold text-cyan-300 border-b border-white/10 pb-2.5">1. حالة الموقع والعد التنازلي الموحد</h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs text-gray-300 mb-1">مدة الدورة التنازلية (بالدقائق)</label>
+                <input type="number" id="admCycleMinutes" min="1" max="10080"
+                       class="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-white/15 text-white text-sm" />
+              </div>
+              <div class="flex items-end">
+                <button type="button" onclick="saveCycleDuration()"
+                        class="w-full py-2.5 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-sm cursor-pointer">
+                  تحديث مدة العداد
+                </button>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-black/40 border border-white/10 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-semibold text-gray-200">حالة التشغيل الحالية:</span>
+                <span id="admSiteStatusBadge" class="px-3 py-1 rounded-full text-xs font-bold"></span>
+              </div>
+
+              <div>
+                <label class="block text-xs text-gray-400 mb-1">نوع الإيقاف (يُنفذ بعد انتهاء العداد الحالي تلقائياً):</label>
+                <select id="admStopMode" onchange="toggleStopDateInput()"
+                        class="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/15 text-white text-sm">
+                  <option value="indefinite">إيقاف بدون مدة محددة (حتى إعادة التشغيل يدوياً)</option>
+                  <option value="scheduled">تحديد موعد إعادة التشغيل تلقائياً</option>
+                </select>
+              </div>
+
+              <div id="admResumeDateWrapper" class="hidden">
+                <label class="block text-xs text-gray-400 mb-1">موعد إعادة تشغيل الموقع:</label>
+                <input type="datetime-local" id="admResumeDateTime"
+                       class="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/15 text-white text-sm" />
+              </div>
+
+              <div class="grid grid-cols-2 gap-3 pt-1">
+                <button type="button" onclick="scheduleSiteStop()"
+                        class="py-2.5 px-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs sm:text-sm cursor-pointer">
+                  ⏸ إيقاف الموقع بعد الجولة
+                </button>
+                <button type="button" onclick="resumeSiteNow()"
+                        class="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm cursor-pointer">
+                  ▶ تشغيل الموقع الآن
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- القسم 2: الأمان وكلمات المرور -->
+        <div class="rgb-card-wrapper">
+          <div class="rgb-card-inner p-5 sm:p-6 space-y-4">
+            <h3 class="text-lg font-bold text-cyan-300 border-b border-white/10 pb-2.5">2. الأمان وكلمات مرور الأدمن</h3>
+            
+            <div>
+              <label class="block text-xs text-gray-300 mb-1">تغيير كلمة المرور الرئيسية</label>
+              <div class="flex gap-2">
+                <input type="text" id="admMainPassword"
+                       class="flex-1 px-3.5 py-2.5 rounded-xl bg-black/50 border border-white/15 text-white text-sm font-mono" />
+                <button type="button" onclick="updateAdminMainPassword()"
+                        class="px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs sm:text-sm cursor-pointer">
+                  حفظ
+                </button>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-black/40 border border-white/10 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-300">كلمة المرور الاحتياطية الثانية:</span>
+                <span id="admBackupPasswordDisplay" class="font-mono text-sm font-bold text-emerald-400 bg-black/60 px-3 py-1 rounded-lg border border-emerald-500/30"></span>
+              </div>
+              <button type="button" onclick="generateNewBackupPassword()"
+                      class="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm cursor-pointer">
+                🔄 توليد كلمة سر احتياطية جديدة
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- القسم 3: التحكم في الخلفية والسرعات وألوان RGB -->
+        <div class="rgb-card-wrapper lg:col-span-2">
+          <div class="rgb-card-inner p-5 sm:p-6 space-y-5">
+            <h3 class="text-lg font-bold text-cyan-300 border-b border-white/10 pb-2.5">3. المظهر 8K والشفافية وسرعات وألوان RGB</h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div>
+                <label class="block text-xs text-gray-300 mb-1">لون الخلفية الأساسي</label>
+                <input type="color" id="admBgColor" onchange="applyVisualSettingsFromAdmin()"
+                       class="w-full h-11 rounded-xl bg-black/50 border border-white/15 cursor-pointer" />
+              </div>
+              <div>
+                <label class="block text-xs text-gray-300 mb-1">شفافية الخلفية: <span id="lblBgOpacity">96%</span></label>
+                <input type="range" id="admBgOpacity" min="0.2" max="1" step="0.02" oninput="applyVisualSettingsFromAdmin()"
+                       class="w-full accent-cyan-400 mt-2" />
+              </div>
+              <div>
+                <label class="block text-xs text-gray-300 mb-1">شفافية أيقونات الخلفية: <span id="lblParticleOpacity">35%</span></label>
+                <input type="range" id="admParticleOpacity" min="0" max="1" step="0.05" oninput="applyVisualSettingsFromAdmin()"
+                       class="w-full accent-cyan-400 mt-2" />
+              </div>
+              <div>
+                <label class="block text-xs text-gray-300 mb-1">سرعة أيقونة الإنفينيتي (ثانية): <span id="lblInfSpeed">2.2s</span></label>
+                <input type="range" id="admInfSpeed" min="0.5" max="15" step="0.1" oninput="applyVisualSettingsFromAdmin()"
+                       class="w-full accent-cyan-400 mt-2" />
+              </div>
+              <div>
+                <label class="block text-xs text-gray-300 mb-1">سرعة حدود الخانات (ثانية): <span id="lblBorderSpeed">14s</span></label>
+                <input type="range" id="admBorderSpeed" min="2" max="40" step="1" oninput="applyVisualSettingsFromAdmin()"
+                       class="w-full accent-cyan-400 mt-2" />
+              </div>
+              <div>
+                <label class="block text-xs text-gray-300 mb-1">سرعة خلفية أيقونة الخانة (ثانية): <span id="lblCardBgSpeed">22s</span></label>
+                <input type="range" id="admCardBgSpeed" min="4" max="60" step="1" oninput="applyVisualSettingsFromAdmin()"
+                       class="w-full accent-cyan-400 mt-2" />
+              </div>
+              <div>
+                <label class="block text-xs text-gray-300 mb-1">سرعة شعار مليونير (ثانية): <span id="lblLogoSpeed">9s</span></label>
+                <input type="range" id="admLogoSpeed" min="2" max="30" step="0.5" oninput="applyVisualSettingsFromAdmin()"
+                       class="w-full accent-cyan-400 mt-2" />
+              </div>
+              <div>
+                <label class="block text-xs text-gray-300 mb-1">سرعة كلمة مباشر (ثانية): <span id="lblLiveSpeed">2.5s</span></label>
+                <input type="range" id="admLiveSpeed" min="0.5" max="15" step="0.1" oninput="applyVisualSettingsFromAdmin()"
+                       class="w-full accent-cyan-400 mt-2" />
+              </div>
+            </div>
+
+            <!-- إدارة ألوان RGB (العدد، الإضافة، الحذف) -->
+            <div class="p-4 rounded-xl bg-black/40 border border-white/10 space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <span class="text-sm font-bold text-white">مصفوفة ألوان RGB النشطة (العدد الحالي: <span id="rgbColorsCount" class="text-cyan-400">0</span>)</span>
+                <div class="flex items-center gap-2">
+                  <input type="color" id="newRgbColorPicker" value="#00ffcc" class="w-10 h-9 rounded-lg bg-transparent border border-white/20 cursor-pointer" />
+                  <button type="button" onclick="addRgbColor()"
+                          class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold cursor-pointer">
+                    + إضافة لون
+                  </button>
+                </div>
+              </div>
+              <div id="rgbColorsList" class="flex flex-wrap gap-2.5 pt-1">
+                <!-- قائمة الألوان القابلة للحذف -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- القسم 4: تعديل نص شرح اللعبة -->
+        <div class="rgb-card-wrapper">
+          <div class="rgb-card-inner p-5 sm:p-6 space-y-4">
+            <h3 class="text-lg font-bold text-cyan-300 border-b border-white/10 pb-2.5">4. نص شرح اللعبة في الصفحة الرئيسية</h3>
+            <textarea id="admGameDescription" rows="5"
+                      class="w-full p-3.5 rounded-xl bg-black/50 border border-white/15 text-white text-sm leading-relaxed"></textarea>
+            <button type="button" onclick="saveGameDescription()"
+                    class="w-full py-2.5 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-sm cursor-pointer">
+              حفظ نص شرح اللعبة
+            </button>
+          </div>
+        </div>
+
+        <!-- القسم 5: بيانات التحويل المالي (فودافون كاش) -->
+        <div class="rgb-card-wrapper">
+          <div class="rgb-card-inner p-5 sm:p-6 space-y-4">
+            <h3 class="text-lg font-bold text-cyan-300 border-b border-white/10 pb-2.5">5. إعدادات التحويل المالي (الخانات المدفوعة)</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs text-gray-300 mb-1">رقم التحويل (فودافون كاش)</label>
+                <input type="text" id="admPaymentNumber" dir="ltr"
+                       class="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-white/15 text-white text-sm font-mono" />
+              </div>
+              <div>
+                <label class="block text-xs text-gray-300 mb-1">الدولة والكود الدولي</label>
+                <input type="text" id="admPaymentCountry"
+                       class="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-white/15 text-white text-sm" />
+              </div>
+            </div>
+            <button type="button" onclick="savePaymentSettings()"
+                    class="w-full py-2.5 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-sm cursor-pointer">
+              حفظ بيانات التحويل
+            </button>
+          </div>
+        </div>
+
+        <!-- القسم 6: المنشور الدعائي ومنصات المشاركة للخانة المثبتة -->
+        <div class="rgb-card-wrapper lg:col-span-2">
+          <div class="rgb-card-inner p-5 sm:p-6 space-y-4">
+            <h3 class="text-lg font-bold text-cyan-300 border-b border-white/10 pb-2.5">6. المنشور الدعائي ومنصات المشاركة (للخانة المثبتة المجانية)</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs text-gray-300 mb-1">نص المنشور الدعائي</label>
+                <textarea id="admPromoPostText" rows="4"
+                          class="w-full p-3 rounded-xl bg-black/50 border border-white/15 text-white text-sm"></textarea>
+              </div>
+              <div class="space-y-3">
+                <div>
+                  <label class="block text-xs text-gray-300 mb-1">رابط موقع مليونير المرفق بالمنشور</label>
+                  <input type="url" id="admPromoSiteUrl" dir="ltr"
+                         class="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-white/15 text-white text-sm font-mono" />
+                </div>
+                <button type="button" onclick="savePromoSettings()"
+                        class="w-full py-2.5 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-sm cursor-pointer">
+                  حفظ المنشور والرابط
+                </button>
+              </div>
+            </div>
+
+            <!-- إضافة وحذف منصات المشاركة -->
+            <div class="p-4 rounded-xl bg-black/40 border border-white/10 space-y-3">
+              <span class="block text-sm font-bold text-white">منصات المشاركة المتاحة للاعب:</span>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                <input type="text" id="newPlatformName" placeholder="اسم المنصة (مثلاً: فيسبوك)"
+                       class="px-3.5 py-2 rounded-xl bg-black/60 border border-white/15 text-white text-sm" />
+                <input type="url" id="newPlatformUrl" placeholder="رابط المشاركة (https://...)" dir="ltr"
+                       class="px-3.5 py-2 rounded-xl bg-black/60 border border-white/15 text-white text-sm font-mono" />
+                <button type="button" onclick="addSharePlatform()"
+                        class="py-2 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm cursor-pointer">
+                  + إضافة منصة
+                </button>
+              </div>
+              <div id="admPlatformsList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 pt-2">
+                <!-- قائمة المنصات -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- القسم 7: إدارة خانات السحب (الخانة المثبتة + الخانات المدفوعة + إضافة خانة جديدة) -->
+        <div class="rgb-card-wrapper lg:col-span-2">
+          <div class="rgb-card-inner p-5 sm:p-6 space-y-5">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3">
+              <h3 class="text-lg font-bold text-cyan-300">7. إدارة خانات السحب (تعديل، إضافة، حذف)</h3>
+              <button type="button" onclick="toggleAddDrawForm()"
+                      class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-bold cursor-pointer">
+                + إضافة خانة سحب جديدة
+              </button>
+            </div>
+
+            <!-- نموذج إضافة خانة جديدة -->
+            <form id="addDrawForm" class="hidden p-4 rounded-2xl bg-emerald-950/30 border border-emerald-500/30 space-y-3">
+              <h4 class="text-sm font-bold text-emerald-300">بيانات خانة السحب الجديدة</h4>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                <div>
+                  <label class="block text-xs text-gray-300 mb-1">عنوان الخانة</label>
+                  <input type="text" id="newDrawTitle" required placeholder="مثال: السحب على 500.000 جنيه"
+                         class="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/15 text-white text-sm" />
+                </div>
+                <div>
+                  <label class="block text-xs text-gray-300 mb-1">السعر</label>
+                  <input type="text" id="newDrawPrice" required placeholder="مثال: 350 جنيه"
+                         class="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/15 text-white text-sm" />
+                </div>
+                <div>
+                  <label class="block text-xs text-gray-300 mb-1">الحد الأدنى للفائزين</label>
+                  <input type="number" id="newDrawMinWinners" value="10" min="1" required
+                         class="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/15 text-white text-sm" />
+                </div>
+                <div>
+                  <label class="block text-xs text-gray-300 mb-1">الحد الأقصى للفائزين</label>
+                  <input type="number" id="newDrawMaxWinners" value="200" min="1" required
+                         class="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/15 text-white text-sm" />
+                </div>
+                <div>
+                  <label class="block text-xs text-gray-300 mb-1">الحد الأدنى للمشتركين</label>
+                  <input type="number" id="newDrawMinSubs" value="1245422" min="1" required
+                         class="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/15 text-white text-sm" />
+                </div>
+                <div>
+                  <label class="block text-xs text-gray-300 mb-1">الحد الأقصى للمشتركين</label>
+                  <input type="number" id="newDrawMaxSubs" value="18545654" min="10" required
+                         class="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/15 text-white text-sm" />
+                </div>
+              </div>
+              <div class="flex justify-end gap-2 pt-2">
+                <button type="button" onclick="toggleAddDrawForm()" class="px-4 py-2 rounded-xl bg-white/10 text-gray-300 text-xs font-bold cursor-pointer">إلغاء</button>
+                <button type="submit" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold cursor-pointer">حفظ وإضافة الخانة</button>
+              </div>
+            </form>
+
+            <!-- قائمة الخانات الحالية للتعديل -->
+            <div id="admDrawsList" class="space-y-4">
+              <!-- يتم تعبئتها بنفس أسماء الخانات في الموقع -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== المنطق البرمجي المتكامل ==================== -->
+  <script id="DEFAULT_CONFIG_SCRIPT">
+    // الإعدادات الافتراضية المدمجة (تتحدث تلقائياً عند توليد نسخة index.html من الأدمن)
+    window.__MILLIONAIRE_EMBEDDED_CONFIG__ = {
+      adminMainPassword: "191993",
+      adminBackupPassword: "931919",
+      cycleDurationMinutes: 60,
+      siteStatus: {
+        isStopped: false,
+        stopPendingAfterCycle: false,
+        stopMode: "indefinite", // "indefinite" | "scheduled"
+        resumeAtTimestamp: null
+      },
+      visuals: {
+        bgColor: "#121418",
+        bgOpacity: 0.96,
+        particleOpacity: 0.35,
+        infinitySpeed: 2.2,
+        logoSpeed: 9,
+        liveSpeed: 2.5,
+        cardBorderSpeed: 14,
+        cardBgSpeed: 22,
+        rgbColors: [
+          "#ff0055",
+          "#ff7700",
+          "#ffdd00",
+          "#00ff88",
+          "#00ccff",
+          "#7700ff",
+          "#ff00c8"
+        ]
+      },
+      gameDescription: "أهلاً بك في عالم المليونير.. أنت الآن على مشارف الثراء! للمشاركة مجاناً، اختر السحب المجاني وشارك الموقع وانتظر لحظة الحسم، فقد يكون اسمك بين المحظوظين الفائزين في مسابقتنا المستمرة بلا توقف. ولمضاعفة فرصك نحو جوائز أضخم وعدد فائزين أكبر، اختر باقات السحب المميزة. لا تتردد.. انطلق الآن مع مليونير، أقوى لعبة حظ في العالم!",
+      payment: {
+        number: "01011234247",
+        country: "مصر (+2)"
+      },
+      promo: {
+        postText: "فرصتك الذهبية للربح الحقيقي مجاناً وبدون إعلانات مع منصة مليونير! سجل الآن وادخل السحب المستمر كل ساعة على جوائز نقدية كبرى:",
+        siteUrl: window.location.href.split('#')[0],
+        platforms: [
+          { id: "plat_fb", name: "فيسبوك", url: "https://www.facebook.com/sharer/sharer.php?u=" },
+          { id: "plat_wa", name: "واتساب", url: "https://api.whatsapp.com/send?text=" },
+          { id: "plat_tg", name: "تيليجرام", url: "https://t.me/share/url?url=" },
+          { id: "plat_x", name: "منصة X", url: "https://twitter.com/intent/tweet?text=" }
+        ]
+      },
+      draws: [
+        {
+          id: "draw_pinned_free",
+          isPinned: true,
+          title: "السحب على 20.000 جنيه",
+          price: "مجاني",
+          minWinners: 10,
+          maxWinners: 200,
+          minSubscribers: 1245422,
+          maxSubscribers: 20545654
+        },
+        {
+          id: "draw_50k",
+          isPinned: false,
+          title: "السحب على 50.000 جنيه",
+          price: "100 جنيه",
+          minWinners: 10,
+          maxWinners: 200,
+          minSubscribers: 1245422,
+          maxSubscribers: 18545654
+        },
+        {
+          id: "draw_75k",
+          isPinned: false,
+          title: "السحب على 75.000 جنيه",
+          price: "150 جنيه",
+          minWinners: 10,
+          maxWinners: 200,
+          minSubscribers: 1245422,
+          maxSubscribers: 18545654
+        },
+        {
+          id: "draw_100k",
+          isPinned: false,
+          title: "السحب على 100.000 جنيه",
+          price: "200 جنيه",
+          minWinners: 10,
+          maxWinners: 200,
+          minSubscribers: 1245422,
+          maxSubscribers: 8545654
+        },
+        {
+          id: "draw_250k",
+          isPinned: false,
+          title: "السحب على 250.000 جنيه",
+          price: "250 جنيه",
+          minWinners: 10,
+          maxWinners: 200,
+          minSubscribers: 1245422,
+          maxSubscribers: 10545654
+        },
+        {
+          id: "draw_1m",
+          isPinned: false,
+          title: "السحب على مليون جنيه",
+          price: "500 جنيه",
+          minWinners: 10,
+          maxWinners: 200,
+          minSubscribers: 1245422,
+          maxSubscribers: 8545654
+        }
+      ]
+    };
+  </script>
+
+  <script>
+    /*************************************************************************
+     * 1. إدارة الحالة والتخزين المستمر (localStorage + حسابات زمنية حقيقية)
+     *************************************************************************/
+    const STORAGE_KEYS = {
+      CONFIG: "millionaire_config_v1",
+      PLAYER: "millionaire_player_v1",
+      RUNTIME: "millionaire_runtime_v1"
+    };
+
+    let appConfig = loadConfig();
+    let playerData = loadPlayer();
+    let runtimeState = loadRuntime();
+    let activeModalDrawId = null;
+    let adminAuthPurpose = "admin"; // "admin" | "export"
+
+    function deepClone(obj) {
+      return JSON.parse(JSON.stringify(obj));
+    }
+
+    function loadConfig() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEYS.CONFIG);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          // دمج آمن مع الإعدادات الافتراضية
+          return {
+            ...deepClone(window.__MILLIONAIRE_EMBEDDED_CONFIG__),
+            ...parsed,
+            siteStatus: { ...window.__MILLIONAIRE_EMBEDDED_CONFIG__.siteStatus, ...(parsed.siteStatus || {}) },
+            visuals: { ...window.__MILLIONAIRE_EMBEDDED_CONFIG__.visuals, ...(parsed.visuals || {}) },
+            payment: { ...window.__MILLIONAIRE_EMBEDDED_CONFIG__.payment, ...(parsed.payment || {}) },
+            promo: { ...window.__MILLIONAIRE_EMBEDDED_CONFIG__.promo, ...(parsed.promo || {}) }
+          };
+        }
+      } catch (e) {
+        console.error("Error loading config:", e);
+      }
+      return deepClone(window.__MILLIONAIRE_EMBEDDED_CONFIG__);
+    }
+
+    function saveConfig() {
+      try {
+        localStorage.setItem(STORAGE_KEYS.CONFIG, JSON.stringify(appConfig));
+      } catch (e) {
+        console.error("Error saving config:", e);
+      }
+    }
+
+    function loadPlayer() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEYS.PLAYER);
+        return saved ? JSON.parse(saved) : null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function savePlayer() {
+      try {
+        if (playerData) {
+          localStorage.setItem(STORAGE_KEYS.PLAYER, JSON.stringify(playerData));
+        } else {
+          localStorage.removeItem(STORAGE_KEYS.PLAYER);
+        }
+      } catch (e) {
+        console.error("Error saving player:", e);
+      }
+    }
+
+    function loadRuntime() {
+      const now = Date.now();
+      const cycleMs = (appConfig.cycleDurationMinutes || 60) * 60 * 1000;
+      try {
+        const saved = localStorage.getItem(STORAGE_KEYS.RUNTIME);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed && parsed.cycleStartTime && parsed.cycleEndTime) {
+            return parsed;
+          }
+        }
+      } catch (e) {}
+
+      // تهيئة دورة زمنية حقيقية أولى
+      const initial = {
+        cycleId: Math.floor(now / cycleMs),
+        cycleStartTime: now,
+        cycleEndTime: now + cycleMs,
+        drawMetrics: {},      // { [drawId]: { winnersCount, baseSubscribers, currentSubscribers, lastIncrementAt, nextStepSeconds } }
+        enteredDraws: {},     // { [drawId]: true } للدورة الحالية فقط
+        notifyEnabled: {}     // { [drawId]: true } مستمر عبر الدورات
+      };
+      localStorage.setItem(STORAGE_KEYS.RUNTIME, JSON.stringify(initial));
+      return initial;
+    }
+
+    function saveRuntime() {
+      try {
+        localStorage.setItem(STORAGE_KEYS.RUNTIME, JSON.stringify(runtimeState));
+      } catch (e) {}
+    }
+
+    /*************************************************************************
+     * 2. خوارزمية الأرقام العشوائية المتنوعة والواقعية
+     *************************************************************************/
+    function getDiverseRandomInt(min, max) {
+      min = Math.ceil(Number(min));
+      max = Math.floor(Number(max));
+      if (max <= min) return min;
+      // استخدام crypto.getRandomValues لضمان تنوع عشوائي حقيقي عالي الجودة
+      const array = new Uint32Array(1);
+      window.crypto.getRandomValues(array);
+      const randomFraction = array[0] / (0xffffffff + 1);
+      return Math.floor(randomFraction * (max - min + 1)) + min;
+    }
+
+    function ensureDrawMetrics(draw, isNewCycle = false) {
+      const now = Date.now();
+      let metric = runtimeState.drawMetrics[draw.id];
+
+      if (!metric || isNewCycle) {
+        const initialSubs = getDiverseRandomInt(draw.minSubscribers, Math.min(draw.maxSubscribers, draw.minSubscribers + Math.floor((draw.maxSubscribers - draw.minSubscribers) * 0.65)));
+        metric = {
+          winnersCount: getDiverseRandomInt(draw.minWinners, draw.maxWinners),
+          currentSubscribers: initialSubs,
+          lastIncrementAt: now,
+          nextStepSeconds: getDiverseRandomInt(1, 120)
+        };
+        runtimeState.drawMetrics[draw.id] = metric;
+      } else {
+        // محاكاة الزيادة التصاعدية حتى أثناء غلق المتصفح بناءً على الزمن المنقضي
+        const elapsedSec = Math.floor((now - metric.lastIncrementAt) / 1000);
+        if (elapsedSec >= metric.nextStepSeconds) {
+          // حساب عدد الخطوات التقريبية التي مرت أثناء الغلق (متوسط خطوة كل 45 ثانية)
+          const stepsPassed = Math.max(1, Math.floor(elapsedSec / 45));
+          let addedTotal = 0;
+          const cappedSteps = Math.min(stepsPassed, 120);
+          for (let i = 0; i < cappedSteps; i++) {
+            addedTotal += getDiverseRandomInt(1, 50);
+          }
+          metric.currentSubscribers = Math.min(draw.maxSubscribers, metric.currentSubscribers + addedTotal);
+          metric.lastIncrementAt = now;
+          metric.nextStepSeconds = getDiverseRandomInt(1, 120);
+        }
+      }
+      return metric;
+    }
+
+    /*************************************************************************
+     * 3. نظام السحابات الإشعارية العلوية (فوق أي سحابة وتغلق يدوياً بـ X فقط)
+     *************************************************************************/
+    function showTopCloudNotification(message, type = "info") {
+      const stack = document.getElementById("topCloudStack");
+      const id = "cloud_" + Date.now() + "_" + Math.floor(Math.random() * 10000);
+
+      let accentClass = "border-cyan-400/50 text-white";
+      let icon = "∞";
+      if (type === "success") {
+        accentClass = "border-emerald-400/60 text-emerald-100";
+        icon = "✓";
+      } else if (type === "warning") {
+        accentClass = "border-amber-400/60 text-amber-100";
+        icon = "!";
+      }
+
+      const card = document.createElement("div");
+      card.id = id;
+      card.className = `cloud-notification ${accentClass}`;
+      card.innerHTML = `
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex items-start gap-3">
+            <span class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold shrink-0 mt-0.5">${icon}</span>
+            <p class="text-sm sm:text-base leading-relaxed font-medium">${message}</p>
+          </div>
+          <button type="button" onclick="dismissTopCloud('${id}')" aria-label="إغلاق"
+                  class="w-8 h-8 rounded-full bg-white/10 hover:bg-rose-500/80 text-white font-bold text-sm flex items-center justify-center shrink-0 transition cursor-pointer">
+            X
+          </button>
+        </div>
+      `;
+      stack.prepend(card);
+    }
+
+    function dismissTopCloud(id) {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+    }
+
+    /*************************************************************************
+     * 4. نظام الوقت المستمر (60 دقيقة) وإدارة الدورة وإيقاف الموقع
+     *************************************************************************/
+    function formatRemainingTime(ms) {
+      if (ms <= 0) return "00:00:00";
+      const totalSeconds = Math.floor(ms / 1000);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      return [
+        String(hours).padStart(2, "0"),
+        String(minutes).padStart(2, "0"),
+        String(seconds).padStart(2, "0")
+      ].join(":");
+    }
+
+    function sendBrowserNotification(title, body) {
+      if (!("Notification" in window)) return;
+      if (Notification.permission === "granted") {
+        try {
+          new Notification(title, { body });
+        } catch (e) {}
+      }
+    }
+
+    function checkAndProcessCycleTick() {
+      const now = Date.now();
+      const cycleMs = (appConfig.cycleDurationMinutes || 60) * 60 * 1000;
+
+      // التحقق من انتهاء موعد الإيقاف المجدول تلقائياً
+      if (appConfig.siteStatus.isStopped && appConfig.siteStatus.stopMode === "scheduled" && appConfig.siteStatus.resumeAtTimestamp) {
+        if (now >= appConfig.siteStatus.resumeAtTimestamp) {
+          appConfig.siteStatus.isStopped = false;
+          appConfig.siteStatus.stopPendingAfterCycle = false;
+          appConfig.siteStatus.resumeAtTimestamp = null;
+          saveConfig();
+          runtimeState.cycleStartTime = now;
+          runtimeState.cycleEndTime = now + cycleMs;
+          appConfig.draws.forEach(d => ensureDrawMetrics(d, true));
+          saveRuntime();
+          renderMainPage();
+        }
+      }
+
+      // إذا كان الموقع متوقفاً حالياً بعد انتهاء الدورة السابقة
+      if (appConfig.siteStatus.isStopped) {
+        updateMaintenanceUI();
+        return;
+      }
+
+      // هل انتهى العد التنازلي للدورة الحالية؟
+      if (now >= runtimeState.cycleEndTime) {
+        // 1. إرسال إشعار النتيجة فقط لمن قام بالنقر على "طلب السحب" في الدورة المنتهية
+        const hadAnyEntry = Object.keys(runtimeState.enteredDraws || {}).some(k => runtimeState.enteredDraws[k]);
+        if (hadAnyEntry) {
+          showTopCloudNotification("لم يحالفك الحظ هذه المرة لسا عندك فرص أكتر حاول مره اخرى", "warning");
+        }
+
+        // مسح طلبات السحب للدورة المنتهية
+        runtimeState.enteredDraws = {};
+
+        // 2. التحقق مما إذا كان الأدمن طلب إيقاف الموقع بعد انتهاء العداد التنازلي الحالي
+        if (appConfig.siteStatus.stopPendingAfterCycle) {
+          appConfig.siteStatus.isStopped = true;
+          appConfig.siteStatus.stopPendingAfterCycle = false;
+          saveConfig();
+          saveRuntime();
+          renderMainPage();
+          return;
+        }
+
+        // 3. بدء دورة جديدة تلقائياً وحساب الزمن المتبقي بدقة حتى لو كان المتصفح مغلقاً
+        const cyclesElapsed = Math.floor((now - runtimeState.cycleEndTime) / cycleMs);
+        const newStart = runtimeState.cycleEndTime + cyclesElapsed * cycleMs;
+        runtimeState.cycleId += (cyclesElapsed + 1);
+        runtimeState.cycleStartTime = newStart;
+        runtimeState.cycleEndTime = newStart + cycleMs;
+
+        // توليد أرقام عشوائية جديدة للفائزين والمشتركين لكل خانة في الدورة الجديدة
+        appConfig.draws.forEach(draw => {
+          ensureDrawMetrics(draw, true);
+          // إرسال إشعار المتصفح لمن فعّل الجرس على هذه الخانة
+          if (runtimeState.notifyEnabled[draw.id]) {
+            sendBrowserNotification("مليونير - السحب متاح الآن!", `بدأ العد التنازلي الجديد لـ (${draw.title}). شارك الآن!`);
+          }
+        });
+
+        saveRuntime();
+        renderDrawsGrid();
+      } else {
+        // تحديث العداد التنازلي وزيادة المشتركين التصاعدية الحية
+        const remaining = runtimeState.cycleEndTime - now;
+        const formatted = formatRemainingTime(remaining);
+
+        document.querySelectorAll(".draw-countdown-value").forEach(el => {
+          el.textContent = formatted;
+        });
+
+        // تحديث عداد المشتركين التصاعدي العشوائي كل (1 إلى 120 ثانية) بمقدار (1 إلى 50)
+        let metricsChanged = false;
+        appConfig.draws.forEach(draw => {
+          const metric = ensureDrawMetrics(draw, false);
+          const secSinceLast = (now - metric.lastIncrementAt) / 1000;
+          if (secSinceLast >= metric.nextStepSeconds) {
+            const inc = getDiverseRandomInt(1, 50);
+            metric.currentSubscribers = Math.min(draw.maxSubscribers, metric.currentSubscribers + inc);
+            metric.lastIncrementAt = now;
+            metric.nextStepSeconds = getDiverseRandomInt(1, 120);
+            metricsChanged = true;
+
+            const subEl = document.getElementById(`subs_${draw.id}`);
+            if (subEl) {
+              subEl.textContent = metric.currentSubscribers.toLocaleString("en-US");
+            }
+          }
+        });
+
+        if (metricsChanged) {
+          saveRuntime();
+        }
+      }
+    }
+
+    function updateMaintenanceUI() {
+      const banner = document.getElementById("maintenanceBanner");
+      const resumeText = document.getElementById("maintenanceResumeText");
+      if (appConfig.siteStatus.isStopped) {
+        banner.classList.remove("hidden");
+        if (appConfig.siteStatus.stopMode === "scheduled" && appConfig.siteStatus.resumeAtTimestamp) {
+          const dt = new Date(appConfig.siteStatus.resumeAtTimestamp);
+          resumeText.textContent = `موعد إعادة التشغيل المقرر: ${dt.toLocaleString("ar-EG")}`;
+        } else {
+          resumeText.textContent = "تم إيقاف السحوبات مؤقتاً لحين إعادة التشغيل";
+        }
+      } else {
+        banner.classList.add("hidden");
+      }
+    }
+
+    /*************************************************************************
+     * 5. عرض الواجهة الرئيسية (اللاعب، الشرح، وخانات السحب)
+     *************************************************************************/
+    function applyVisualStyles() {
+      const v = appConfig.visuals;
+      const root = document.documentElement;
+      root.style.setProperty("--bg-base", v.bgColor);
+      root.style.setProperty("--bg-opacity", v.bgOpacity);
+      root.style.setProperty("--particle-opacity", v.particleOpacity);
+      root.style.setProperty("--infinity-speed", `${v.infinitySpeed}s`);
+      root.style.setProperty("--logo-speed", `${v.logoSpeed}s`);
+      root.style.setProperty("--live-speed", `${v.liveSpeed}s`);
+      root.style.setProperty("--card-border-speed", `${v.cardBorderSpeed}s`);
+      root.style.setProperty("--card-bg-speed", `${v.cardBgSpeed}s`);
+
+      const colors = (v.rgbColors && v.rgbColors.length > 0) ? v.rgbColors : ["#00ffcc", "#ff0055"];
+      const loopedColors = [...colors, colors[0]].join(", ");
+      root.style.setProperty("--rgb-gradient", `linear-gradient(90deg, ${loopedColors})`);
+      root.style.setProperty("--rgb-conic", `conic-gradient(from var(--angle, 0deg), ${loopedColors})`);
+    }
+
+    function renderPlayerHeader() {
+      const container = document.getElementById("playerHeaderArea");
+      if (playerData && playerData.fullName) {
+        container.innerHTML = `
+          <button type="button" onclick="openModal('logoutConfirmModal')"
+                  class="group px-5 py-2.5 rounded-full bg-white/5 hover:bg-rose-500/15 border border-white/15 hover:border-rose-400/50 transition flex items-center gap-2.5 cursor-pointer shadow-lg">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+            <span class="text-sm sm:text-base font-semibold text-white">أهلاً بك، <span class="text-cyan-300">${escapeHtml(playerData.fullName)}</span></span>
+            <span class="text-xs text-gray-400 group-hover:text-rose-300 transition">(تسجيل خروج)</span>
+          </button>
+        `;
+      } else {
+        container.innerHTML = `
+          <button type="button" onclick="openModal('registerModal')"
+                  class="px-7 py-3 rounded-full bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:brightness-110 text-white font-bold text-sm sm:text-base shadow-xl shadow-cyan-500/20 transition transform hover:scale-105 cursor-pointer">
+            إنشاء حساب
+          </button>
+        `;
+      }
+    }
+
+    function renderDrawsGrid() {
+      const grid = document.getElementById("drawsGrid");
+      const remainingStr = appConfig.siteStatus.isStopped
+        ? "متوقف مؤقتاً"
+        : formatRemainingTime(Math.max(0, runtimeState.cycleEndTime - Date.now()));
+
+      grid.innerHTML = appConfig.draws.map(draw => {
+        const metric = ensureDrawMetrics(draw, false);
+        const isEntered = Boolean(runtimeState.enteredDraws[draw.id]);
+        const isNotified = Boolean(runtimeState.notifyEnabled[draw.id]);
+        const isStopped = appConfig.siteStatus.isStopped;
+
+        return `
+          <article class="rgb-card-wrapper">
+            <div class="rgb-card-inner p-6 flex flex-col justify-between gap-5">
+              <div class="card-rgb-watermark">∞</div>
+
+              <!-- رأس الخانة: العنوان + زر الجرس -->
+              <div class="relative z-10 flex items-start justify-between gap-3">
+                <div>
+                  ${draw.isPinned ? `<span class="inline-block mb-1.5 px-2.5 py-0.5 rounded-md bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-bold">الباقة المجانية المثبتة</span>` : ``}
+                  <h3 class="text-xl sm:text-2xl font-bold text-white leading-snug">${escapeHtml(draw.title)}</h3>
+                </div>
+
+                <!-- أيقونة تفعيل الإشعارات على كل خانة -->
+                <button type="button"
+                        onclick="toggleDrawNotification('${draw.id}')"
+                        title="تفعيل إشعارات بدء السحب"
+                        class="w-11 h-11 rounded-2xl border flex items-center justify-center shrink-0 transition cursor-pointer ${
+                          isNotified
+                            ? "bg-amber-500/20 border-amber-400 text-amber-300 shadow-lg shadow-amber-500/20"
+                            : "bg-white/5 border-white/15 text-gray-400 hover:text-white hover:bg-white/10"
+                        }">
+                  <svg class="w-5 h-5" fill="${isNotified ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                          d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                  </svg>
+                </button>
+              </div>
+
+              <!-- بيانات الخانة الأساسية فقط بدون أي شرح -->
+              <div class="relative z-10 space-y-3 bg-black/40 rounded-2xl p-4 border border-white/10">
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-gray-400">السعر</span>
+                  <span class="font-bold text-base ${draw.isPinned ? 'text-emerald-400' : 'text-cyan-300'}">${escapeHtml(draw.price)}</span>
+                </div>
+
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-gray-400">الوقت المتبقي</span>
+                  <span class="draw-countdown-value font-mono font-bold text-base text-amber-300" dir="ltr">${remainingStr}</span>
+                </div>
+
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-gray-400">عدد الفائزين في هذه الجولة</span>
+                  <span class="font-bold text-base text-white">${metric.winnersCount.toLocaleString("en-US")}</span>
+                </div>
+
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-gray-400">عدد المشتركين</span>
+                  <span id="subs_${draw.id}" class="font-mono font-bold text-base text-emerald-300">${metric.currentSubscribers.toLocaleString("en-US")}</span>
+                </div>
+              </div>
+
+              <!-- حالة التفعيل بالضوء الأخضر + زر طلب السحب -->
+              <div class="relative z-10 pt-1">
+                ${
+                  isEntered
+                    ? `<div class="w-full py-3.5 px-4 rounded-xl bg-emerald-500/15 border border-emerald-400/50 flex items-center justify-center gap-3 text-emerald-300 font-bold text-sm sm:text-base">
+                        <span class="active-green-led"></span>
+                        <span>طلب السحب مفعل</span>
+                      </div>`
+                    : `<button type="button"
+                               onclick="handleRequestDrawClick('${draw.id}')"
+                               ${isStopped ? "disabled" : ""}
+                               class="w-full py-3.5 px-5 rounded-xl font-bold text-sm sm:text-base transition shadow-lg ${
+                                 isStopped
+                                   ? "bg-gray-800 text-gray-500 border border-white/10 cursor-not-allowed"
+                                   : "bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:brightness-110 text-white cursor-pointer"
+                               }">
+                        ${isStopped ? "السحب متوقف مؤقتاً" : "طلب السحب"}
+                      </button>`
+                }
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderMainPage() {
+      applyVisualStyles();
+      renderPlayerHeader();
+      document.getElementById("gameDescriptionDisplay").textContent = appConfig.gameDescription;
+      updateMaintenanceUI();
+      renderDrawsGrid();
+    }
+
+    /*************************************************************************
+     * 6. التفاعلات: إنشاء الحساب، تسجيل الخروج، الإشعارات، وطلب السحب
+     *************************************************************************/
+    document.getElementById("registerForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const fullName = document.getElementById("regFullName").value.trim();
+      const address = document.getElementById("regAddress").value.trim();
+      const phone = document.getElementById("regPhone").value.trim();
+
+      if (!fullName || !address || !phone) return;
+
+      playerData = {
+        fullName,
+        address,
+        phone,
+        createdAt: Date.now()
+      };
+      savePlayer();
+      closeModal("registerModal");
+      renderPlayerHeader();
+      showTopCloudNotification(`تم إنشاء حسابك بنجاح يا ${fullName}! سيتم التواصل معك عند الفوز.`, "success");
+    });
+
+    function rejectRegistration() {
+      closeModal("registerModal");
+      showTopCloudNotification("تم إلغاء إنشاء الحساب. يجب الموافقة على الشروط للمشاركة في السحوبات.", "warning");
+    }
+
+    function confirmDeleteAccount() {
+      playerData = null;
+      savePlayer();
+      runtimeState.enteredDraws = {};
+      saveRuntime();
+      closeModal("logoutConfirmModal");
+      renderPlayerHeader();
+      renderDrawsGrid();
+      showTopCloudNotification("تم تسجيل الخروج وحذف جميع بيانات حسابك من الموقع بالكامل.", "info");
+    }
+
+    async function toggleDrawNotification(drawId) {
+      const currentlyEnabled = Boolean(runtimeState.notifyEnabled[drawId]);
+      if (currentlyEnabled) {
+        runtimeState.notifyEnabled[drawId] = false;
+        saveRuntime();
+        renderDrawsGrid();
+        showTopCloudNotification("تم إيقاف إشعارات هذه الخانة.", "info");
+        return;
+      }
+
+      if ("Notification" in window) {
+        let perm = Notification.permission;
+        if (perm === "default") {
+          perm = await Notification.requestPermission();
+        }
+        if (perm === "granted") {
+          runtimeState.notifyEnabled[drawId] = true;
+          saveRuntime();
+          renderDrawsGrid();
+          showTopCloudNotification("تم تفعيل إشعارات المتصفح! سيصلك تنبيه فور بدء العداد التنازلي الجديد.", "success");
+        } else {
+          // تفعيل داخلي أيضاً مع تنبيه المتصفح
+          runtimeState.notifyEnabled[drawId] = true;
+          saveRuntime();
+          renderDrawsGrid();
+          showTopCloudNotification("تم تفعيل تنبيه الخانة (يرجى السماح بالإشعارات من إعدادات المتصفح لاستقبالها في الخلفية).", "warning");
+        }
+      } else {
+        runtimeState.notifyEnabled[drawId] = true;
+        saveRuntime();
+        renderDrawsGrid();
+        showTopCloudNotification("تم تفعيل إشعارات السحب لهذه الخانة.", "success");
+      }
+    }
+
+    function handleRequestDrawClick(drawId) {
+      if (appConfig.siteStatus.isStopped) {
+        showTopCloudNotification("انتظرونا قريباً - السحب متوقف مؤقتاً.", "warning");
+        return;
+      }
+
+      // يجب إنشاء حساب قبل استخدام طلب السحب
+      if (!playerData || !playerData.fullName) {
+        showTopCloudNotification("يجب إنشاء حساب أولاً قبل طلب السحب.", "warning");
+        openModal("registerModal");
+        return;
+      }
+
+      // السماح بطلب السحب مرة واحدة فقط لكل خانة في الدورة الواحدة
+      if (runtimeState.enteredDraws[drawId]) {
+        return;
+      }
+
+      const draw = appConfig.draws.find(d => d.id === drawId);
+      if (!draw) return;
+
+      activeModalDrawId = drawId;
+
+      if (draw.isPinned) {
+        // الخانة المثبتة المجانية: سحابة المنشور الدعائي ومنصات المشاركة
+        document.getElementById("pinnedModalTitle").textContent = draw.title;
+        document.getElementById("promoPostTextDisplay").textContent = appConfig.promo.postText;
+        document.getElementById("promoLinkDisplay").textContent = appConfig.promo.siteUrl;
+        document.getElementById("shareRedirectNotice").classList.add("hidden");
+
+        const platContainer = document.getElementById("sharePlatformsContainer");
+        platContainer.innerHTML = appConfig.promo.platforms.map(p => `
+          <button type="button" onclick="triggerPlatformShare('${p.id}')"
+                  class="py-3 px-4 rounded-xl bg-white/10 hover:bg-cyan-500/25 border border-white/15 hover:border-cyan-400/50 text-white font-bold text-sm transition flex items-center justify-center gap-2 cursor-pointer">
+            <span>🔗</span>
+            <span>${escapeHtml(p.name)}</span>
+          </button>
+        `).join("");
+
+        openModal("pinnedShareModal");
+      } else {
+        // الخانات المدفوعة: سحابة التحويل المالي ورفع سكرين شوت
+        document.getElementById("paidModalTitle").textContent = draw.title;
+        document.getElementById("paidModalPrice").textContent = `قيمة الاشتراك: ${draw.price}`;
+        document.getElementById("paymentCountryDisplay").textContent = appConfig.payment.country;
+        document.getElementById("paymentNumberDisplay").textContent = appConfig.payment.number;
+        document.getElementById("paidSubmitForm").reset();
+        document.getElementById("screenshotPreview").classList.add("hidden");
+        document.getElementById("uploadPlaceholder").classList.remove("hidden");
+
+        openModal("paidDrawModal");
+      }
+    }
+
+    function copyToClipboardSafe(text, successMsg) {
+      const tempInput = document.createElement("textarea");
+      tempInput.value = text;
+      tempInput.style.position = "fixed";
+      tempInput.style.opacity = "0";
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      try {
+        document.execCommand("copy");
+        showTopCloudNotification(successMsg, "success");
+      } catch (e) {
+        showTopCloudNotification("تم النسخ.", "success");
+      }
+      document.body.removeChild(tempInput);
+    }
+
+    function copyPromoPost() {
+      const fullText = `${appConfig.promo.postText}\n${appConfig.promo.siteUrl}`;
+      copyToClipboardSafe(fullText, "تم نسخ المنشور الدعائي ورابط الموقع بنجاح!");
+    }
+
+    function copyPaymentNumber() {
+      copyToClipboardSafe(appConfig.payment.number, `تم نسخ رقم التحويل: ${appConfig.payment.number}`);
+    }
+
+    function triggerPlatformShare(platformId) {
+      const drawId = activeModalDrawId;
+      if (!drawId) return;
+      const platform = appConfig.promo.platforms.find(p => p.id === platformId);
+      if (!platform) return;
+
+      const noticeEl = document.getElementById("shareRedirectNotice");
+      noticeEl.classList.remove("hidden");
+
+      const shareContent = encodeURIComponent(`${appConfig.promo.postText} ${appConfig.promo.siteUrl}`);
+      const targetUrl = platform.url.includes("?") ? `${platform.url}${shareContent}` : platform.url;
+
+      // إخطار اللاعب قبل الانتقال إلى المنصة بـ 3 ثوانٍ وتفعيل الخانة تلقائياً
+      setTimeout(() => {
+        runtimeState.enteredDraws[drawId] = true;
+        saveRuntime();
+        closeModal("pinnedShareModal");
+        renderDrawsGrid();
+        window.open(targetUrl, "_blank", "noopener,noreferrer");
+      }, 3000);
+    }
+
+    function handleScreenshotPreview(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const img = document.getElementById("screenshotPreview");
+        img.src = e.target.result;
+        img.classList.remove("hidden");
+        document.getElementById("uploadPlaceholder").classList.add("hidden");
+      };
+      reader.readAsDataURL(file);
+    }
+
+    document.getElementById("paidSubmitForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!activeModalDrawId) return;
+
+      runtimeState.enteredDraws[activeModalDrawId] = true;
+      saveRuntime();
+      closeModal("paidDrawModal");
+      renderDrawsGrid();
+
+      // إشعار في سحابة عليا لا تغلق إلا من X
+      showTopCloudNotification(
+        "مبروك تم تفعيل السحب سيتم مراجعة الطلب من خدمة العملاء قم بتفعيل الإشعارات للحصول على نتيجة السحب فور انتهاء السحب",
+        "success"
+      );
+    });
+
+    /*************************************************************************
+     * 7. الإيماءات السرية (10 ثوانٍ بدون أي عداد تنازلي مرئي)
+     *************************************************************************/
+    function attachSecretLongPress(elementId, onSuccessCallback) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      let timer = null;
+
+      const startHold = (e) => {
+        if (e.type === "mousedown" && e.button !== 0) return;
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          onSuccessCallback();
+        }, 10000); // 10 ثوانٍ بالضبط بدون أي عداد مرئي
+      };
+
+      const cancelHold = () => {
+        clearTimeout(timer);
+        timer = null;
+      };
+
+      el.addEventListener("mousedown", startHold);
+      el.addEventListener("touchstart", startHold, { passive: true });
+      el.addEventListener("mouseup", cancelHold);
+      el.addEventListener("mouseleave", cancelHold);
+      el.addEventListener("touchend", cancelHold);
+      el.addEventListener("touchcancel", cancelHold);
+    }
+
+    // الضغط 10 ثوانٍ على كلمة "مليونير" لفتح لوحة الأدمن
+    attachSecretLongPress("secretAdminTrigger", () => {
+      adminAuthPurpose = "admin";
+      document.getElementById("adminAuthTitle").textContent = "دخول لوحة تحكم الأدمن";
+      document.getElementById("adminPasswordInput").value = "";
+      openModal("adminAuthModal");
+    });
+
+    // الضغط 10 ثوانٍ على كلمة "مباشر" لتوليد وتنزيل نسخة index.html
+    attachSecretLongPress("secretExportTrigger", () => {
+      adminAuthPurpose = "export";
+      document.getElementById("adminAuthTitle").textContent = "تأكيد كلمة المرور لتوليد نسخة index.html";
+      document.getElementById("adminPasswordInput").value = "";
+      openModal("adminAuthModal");
+    });
+
+    document.getElementById("adminAuthForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const entered = document.getElementById("adminPasswordInput").value.trim();
+      const validMain = appConfig.adminMainPassword;
+      const validBackup = appConfig.adminBackupPassword;
+
+      if (entered === validMain || entered === validBackup) {
+        closeModal("adminAuthModal");
+        if (adminAuthPurpose === "admin") {
+          populateAdminDashboard();
+          openModal("adminDashboardModal");
+        } else if (adminAuthPurpose === "export") {
+          exportUpdatedIndexHtml();
+        }
+      } else {
+        showTopCloudNotification("كلمة المرور غير صحيحة!", "warning");
+      }
+    });
+
+    /*************************************************************************
+     * 8. لوحة تحكم الأدمن وتصدير ملف index.html المحدث لـ GitHub
+     *************************************************************************/
+    function populateAdminDashboard() {
+      document.getElementById("admCycleMinutes").value = appConfig.cycleDurationMinutes;
+      document.getElementById("admMainPassword").value = appConfig.adminMainPassword;
+      document.getElementById("admBackupPasswordDisplay").textContent = appConfig.adminBackupPassword;
+
+      // حالة الموقع
+      const statusBadge = document.getElementById("admSiteStatusBadge");
+      if (appConfig.siteStatus.isStopped) {
+        statusBadge.textContent = "متوقف حالياً (انتظرونا قريباً)";
+        statusBadge.className = "px-3 py-1 rounded-full text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40";
+      } else if (appConfig.siteStatus.stopPendingAfterCycle) {
+        statusBadge.textContent = "مجدول للإيقاف فور انتهاء العداد الحالي";
+        statusBadge.className = "px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40";
+      } else {
+        statusBadge.textContent = "يعمل بشكل مستمر";
+        statusBadge.className = "px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
+      }
+
+      document.getElementById("admStopMode").value = appConfig.siteStatus.stopMode || "indefinite";
+      toggleStopDateInput();
+
+      // المظهر والسرعات
+      const v = appConfig.visuals;
+      document.getElementById("admBgColor").value = v.bgColor;
+      document.getElementById("admBgOpacity").value = v.bgOpacity;
+      document.getElementById("lblBgOpacity").textContent = `${Math.round(v.bgOpacity * 100)}%`;
+      document.getElementById("admParticleOpacity").value = v.particleOpacity;
+      document.getElementById("lblParticleOpacity").textContent = `${Math.round(v.particleOpacity * 100)}%`;
+      document.getElementById("admInfSpeed").value = v.infinitySpeed;
+      document.getElementById("lblInfSpeed").textContent = `${v.infinitySpeed}s`;
+      document.getElementById("admBorderSpeed").value = v.cardBorderSpeed;
+      document.getElementById("lblBorderSpeed").textContent = `${v.cardBorderSpeed}s`;
+      document.getElementById("admCardBgSpeed").value = v.cardBgSpeed;
+      document.getElementById("lblCardBgSpeed").textContent = `${v.cardBgSpeed}s`;
+      document.getElementById("admLogoSpeed").value = v.logoSpeed;
+      document.getElementById("lblLogoSpeed").textContent = `${v.logoSpeed}s`;
+      document.getElementById("admLiveSpeed").value = v.liveSpeed;
+      document.getElementById("lblLiveSpeed").textContent = `${v.liveSpeed}s`;
+
+      renderAdminRgbColors();
+
+      // النصوص والدفع والمنشور
+      document.getElementById("admGameDescription").value = appConfig.gameDescription;
+      document.getElementById("admPaymentNumber").value = appConfig.payment.number;
+      document.getElementById("admPaymentCountry").value = appConfig.payment.country;
+      document.getElementById("admPromoPostText").value = appConfig.promo.postText;
+      document.getElementById("admPromoSiteUrl").value = appConfig.promo.siteUrl;
+
+      renderAdminPlatforms();
+      renderAdminDrawsList();
+    }
+
+    function saveCycleDuration() {
+      const mins = parseInt(document.getElementById("admCycleMinutes").value, 10);
+      if (!mins || mins < 1) return;
+      appConfig.cycleDurationMinutes = mins;
+      saveConfig();
+      const now = Date.now();
+      runtimeState.cycleStartTime = now;
+      runtimeState.cycleEndTime = now + mins * 60 * 1000;
+      saveRuntime();
+      showTopCloudNotification(`تم تحديث مدة العد التنازلي الموحد إلى ${mins} دقيقة.`, "success");
+    }
+
+    function toggleStopDateInput() {
+      const mode = document.getElementById("admStopMode").value;
+      const wrapper = document.getElementById("admResumeDateWrapper");
+      if (mode === "scheduled") {
+        wrapper.classList.remove("hidden");
+      } else {
+        wrapper.classList.add("hidden");
+      }
+    }
+
+    function scheduleSiteStop() {
+      const mode = document.getElementById("admStopMode").value;
+      let resumeTs = null;
+      if (mode === "scheduled") {
+        const dtVal = document.getElementById("admResumeDateTime").value;
+        if (!dtVal) {
+          showTopCloudNotification("يرجى تحديد تاريخ ووقت إعادة التشغيل.", "warning");
+          return;
+        }
+        resumeTs = new Date(dtVal).getTime();
+      }
+
+      // ممنوع التوقف المفاجئ: ينتهي العد التنازلي الحالي أولاً ثم يتوقف الموقع
+      appConfig.siteStatus.stopPendingAfterCycle = true;
+      appConfig.siteStatus.stopMode = mode;
+      appConfig.siteStatus.resumeAtTimestamp = resumeTs;
+      saveConfig();
+      populateAdminDashboard();
+      showTopCloudNotification("تمت جدولة إيقاف الموقع فور انتهاء العد التنازلي للجولة الحالية (بدون توقف مفاجئ).", "success");
+    }
+
+    function resumeSiteNow() {
+      const now = Date.now();
+      const cycleMs = (appConfig.cycleDurationMinutes || 60) * 60 * 1000;
+      appConfig.siteStatus.isStopped = false;
+      appConfig.siteStatus.stopPendingAfterCycle = false;
+      appConfig.siteStatus.resumeAtTimestamp = null;
+      saveConfig();
+
+      runtimeState.cycleStartTime = now;
+      runtimeState.cycleEndTime = now + cycleMs;
+      appConfig.draws.forEach(d => ensureDrawMetrics(d, true));
+      saveRuntime();
+
+      populateAdminDashboard();
+      renderMainPage();
+      showTopCloudNotification("تم تشغيل الموقع وبدء دورة سحب جديدة بنجاح!", "success");
+    }
+
+    function updateAdminMainPassword() {
+      const newPass = document.getElementById("admMainPassword").value.trim();
+      if (!newPass || newPass.length < 4) {
+        showTopCloudNotification("يجب أن تكون كلمة المرور 4 أحرف/أرقام على الأقل.", "warning");
+        return;
+      }
+      appConfig.adminMainPassword = newPass;
+      saveConfig();
+      showTopCloudNotification("تم تحديث كلمة المرور الرئيسية للأدمن.", "success");
+    }
+
+    function generateNewBackupPassword() {
+      const newBackup = String(getDiverseRandomInt(100000, 999999));
+      appConfig.adminBackupPassword = newBackup;
+      saveConfig();
+      document.getElementById("admBackupPasswordDisplay").textContent = newBackup;
+      showTopCloudNotification(`تم توليد كلمة مرور احتياطية جديدة: ${newBackup}`, "success");
+    }
+
+    function applyVisualSettingsFromAdmin() {
+      const v = appConfig.visuals;
+      v.bgColor = document.getElementById("admBgColor").value;
+      v.bgOpacity = parseFloat(document.getElementById("admBgOpacity").value);
+      v.particleOpacity = parseFloat(document.getElementById("admParticleOpacity").value);
+      v.infinitySpeed = parseFloat(document.getElementById("admInfSpeed").value);
+      v.cardBorderSpeed = parseFloat(document.getElementById("admBorderSpeed").value);
+      v.cardBgSpeed = parseFloat(document.getElementById("admCardBgSpeed").value);
+      v.logoSpeed = parseFloat(document.getElementById("admLogoSpeed").value);
+      v.liveSpeed = parseFloat(document.getElementById("admLiveSpeed").value);
+
+      document.getElementById("lblBgOpacity").textContent = `${Math.round(v.bgOpacity * 100)}%`;
+      document.getElementById("lblParticleOpacity").textContent = `${Math.round(v.particleOpacity * 100)}%`;
+      document.getElementById("lblInfSpeed").textContent = `${v.infinitySpeed}s`;
+      document.getElementById("lblBorderSpeed").textContent = `${v.cardBorderSpeed}s`;
+      document.getElementById("lblCardBgSpeed").textContent = `${v.cardBgSpeed}s`;
+      document.getElementById("lblLogoSpeed").textContent = `${v.logoSpeed}s`;
+      document.getElementById("lblLiveSpeed").textContent = `${v.liveSpeed}s`;
+
+      saveConfig();
+      applyVisualStyles();
+    }
+
+    function renderAdminRgbColors() {
+      const list = document.getElementById("rgbColorsList");
+      const colors = appConfig.visuals.rgbColors;
+      document.getElementById("rgbColorsCount").textContent = colors.length;
+
+      list.innerHTML = colors.map((hex, idx) => `
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/15">
+          <span class="w-5 h-5 rounded-full border border-white/30" style="background:${hex}"></span>
+          <span class="text-xs font-mono text-gray-200">${hex}</span>
+          ${colors.length > 2 ? `<button type="button" onclick="removeRgbColor(${idx})" class="text-rose-400 hover:text-rose-300 font-bold text-xs cursor-pointer">✕</button>` : ``}
+        </div>
+      `).join("");
+    }
+
+    function addRgbColor() {
+      const color = document.getElementById("newRgbColorPicker").value;
+      appConfig.visuals.rgbColors.push(color);
+      saveConfig();
+      applyVisualStyles();
+      renderAdminRgbColors();
+    }
+
+    function removeRgbColor(index) {
+      if (appConfig.visuals.rgbColors.length <= 2) return;
+      appConfig.visuals.rgbColors.splice(index, 1);
+      saveConfig();
+      applyVisualStyles();
+      renderAdminRgbColors();
+    }
+
+    function saveGameDescription() {
+      appConfig.gameDescription = document.getElementById("admGameDescription").value.trim();
+      saveConfig();
+      document.getElementById("gameDescriptionDisplay").textContent = appConfig.gameDescription;
+      showTopCloudNotification("تم تحديث نص شرح اللعبة بنجاح.", "success");
+    }
+
+    function savePaymentSettings() {
+      appConfig.payment.number = document.getElementById("admPaymentNumber").value.trim();
+      appConfig.payment.country = document.getElementById("admPaymentCountry").value.trim();
+      saveConfig();
+      showTopCloudNotification("تم تحديث بيانات التحويل المالي.", "success");
+    }
+
+    function savePromoSettings() {
+      appConfig.promo.postText = document.getElementById("admPromoPostText").value.trim();
+      appConfig.promo.siteUrl = document.getElementById("admPromoSiteUrl").value.trim();
+      saveConfig();
+      showTopCloudNotification("تم تحديث المنشور الدعائي والرابط.", "success");
+    }
+
+    function renderAdminPlatforms() {
+      const container = document.getElementById("admPlatformsList");
+      container.innerHTML = appConfig.promo.platforms.map((p, idx) => `
+        <div class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-white/5 border border-white/10">
+          <div class="truncate">
+            <div class="text-xs font-bold text-white">${escapeHtml(p.name)}</div>
+            <div class="text-[11px] text-gray-400 truncate font-mono" dir="ltr">${escapeHtml(p.url)}</div>
+          </div>
+          <button type="button" onclick="removeSharePlatform(${idx})"
+                  class="px-2.5 py-1 rounded-lg bg-rose-500/20 text-rose-300 text-xs font-bold hover:bg-rose-500/40 cursor-pointer">
+            حذف
+          </button>
+        </div>
+      `).join("");
+    }
+
+    function addSharePlatform() {
+      const name = document.getElementById("newPlatformName").value.trim();
+      const url = document.getElementById("newPlatformUrl").value.trim();
+      if (!name || !url) return;
+      appConfig.promo.platforms.push({
+        id: "plat_" + Date.now(),
+        name,
+        url
+      });
+      document.getElementById("newPlatformName").value = "";
+      document.getElementById("newPlatformUrl").value = "";
+      saveConfig();
+      renderAdminPlatforms();
+    }
+
+    function removeSharePlatform(index) {
+      appConfig.promo.platforms.splice(index, 1);
+      saveConfig();
+      renderAdminPlatforms();
+    }
+
+    function toggleAddDrawForm() {
+      document.getElementById("addDrawForm").classList.toggle("hidden");
+    }
+
+    document.getElementById("addDrawForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const title = document.getElementById("newDrawTitle").value.trim();
+      const price = document.getElementById("newDrawPrice").value.trim();
+      const minWinners = parseInt(document.getElementById("newDrawMinWinners").value, 10) || 10;
+      const maxWinners = parseInt(document.getElementById("newDrawMaxWinners").value, 10) || 200;
+      const minSubscribers = parseInt(document.getElementById("newDrawMinSubs").value, 10) || 1245422;
+      const maxSubscribers = parseInt(document.getElementById("newDrawMaxSubs").value, 10) || 18545654;
+
+      const newDraw = {
+        id: "draw_" + Date.now(),
+        isPinned: false,
+        title,
+        price,
+        minWinners,
+        maxWinners,
+        minSubscribers,
+        maxSubscribers
+      };
+
+      appConfig.draws.push(newDraw);
+      ensureDrawMetrics(newDraw, true);
+      saveConfig();
+      saveRuntime();
+      this.reset();
+      toggleAddDrawForm();
+      renderAdminDrawsList();
+      renderDrawsGrid();
+      showTopCloudNotification(`تمت إضافة خانة "${title}" بنجاح.`, "success");
+    });
+
+    function renderAdminDrawsList() {
+      const container = document.getElementById("admDrawsList");
+      container.innerHTML = appConfig.draws.map((draw, idx) => `
+        <div class="p-4 rounded-2xl bg-black/45 border ${draw.isPinned ? 'border-emerald-500/40' : 'border-white/10'} space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="text-sm sm:text-base font-bold text-white">${escapeHtml(draw.title)}</span>
+              ${draw.isPinned ? `<span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold">خانة مثبتة دائمة</span>` : ``}
+            </div>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="saveEditedDraw(${idx})"
+                      class="px-3.5 py-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold cursor-pointer">
+                حفظ التعديلات
+              </button>
+              ${!draw.isPinned ? `
+                <button type="button" onclick="deleteDraw(${idx})"
+                        class="px-3.5 py-1.5 rounded-xl bg-rose-600/80 hover:bg-rose-600 text-white text-xs font-bold cursor-pointer">
+                  حذف الخانة
+                </button>
+              ` : ``}
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">اسم/عنوان الخانة</label>
+              <input type="text" id="edit_title_${idx}" value="${escapeHtml(draw.title)}"
+                     class="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/15 text-white text-xs sm:text-sm" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">السعر ${draw.isPinned ? '(مثبت مجاني دائماً)' : ''}</label>
+              <input type="text" id="edit_price_${idx}" value="${draw.isPinned ? 'مجاني' : escapeHtml(draw.price)}" ${draw.isPinned ? 'disabled' : ''}
+                     class="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/15 text-white text-xs sm:text-sm disabled:opacity-60" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">أقل عدد فائزين</label>
+              <input type="number" id="edit_minW_${idx}" value="${draw.minWinners}"
+                     class="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/15 text-white text-xs sm:text-sm" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">أقصى عدد فائزين</label>
+              <input type="number" id="edit_maxW_${idx}" value="${draw.maxWinners}"
+                     class="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/15 text-white text-xs sm:text-sm" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">أقل عدد مشتركين</label>
+              <input type="number" id="edit_minS_${idx}" value="${draw.minSubscribers}"
+                     class="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/15 text-white text-xs sm:text-sm" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">أقصى عدد مشتركين</label>
+              <input type="number" id="edit_maxS_${idx}" value="${draw.maxSubscribers}"
+                     class="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/15 text-white text-xs sm:text-sm" />
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function saveEditedDraw(idx) {
+      const draw = appConfig.draws[idx];
+      if (!draw) return;
+      draw.title = document.getElementById(`edit_title_${idx}`).value.trim() || draw.title;
+      draw.price = draw.isPinned ? "مجاني" : (document.getElementById(`edit_price_${idx}`).value.trim() || draw.price);
+      draw.minWinners = parseInt(document.getElementById(`edit_minW_${idx}`).value, 10) || 10;
+      draw.maxWinners = parseInt(document.getElementById(`edit_maxW_${idx}`).value, 10) || 200;
+      draw.minSubscribers = parseInt(document.getElementById(`edit_minS_${idx}`).value, 10) || 1245422;
+      draw.maxSubscribers = parseInt(document.getElementById(`edit_maxS_${idx}`).value, 10) || 20545654;
+
+      ensureDrawMetrics(draw, true);
+      saveConfig();
+      saveRuntime();
+      renderAdminDrawsList();
+      renderDrawsGrid();
+      showTopCloudNotification(`تم حفظ تعديلات "${draw.title}".`, "success");
+    }
+
+    function deleteDraw(idx) {
+      const draw = appConfig.draws[idx];
+      if (!draw || draw.isPinned) return;
+      appConfig.draws.splice(idx, 1);
+      saveConfig();
+      renderAdminDrawsList();
+      renderDrawsGrid();
+      showTopCloudNotification(`تم حذف خانة "${draw.title}".`, "info");
+    }
+
+    // توليد وتنزيل نسخة index.html كاملة متضمنة جميع التعديلات لرفعها على GitHub
+    function exportUpdatedIndexHtml() {
+      const clonedDoc = document.documentElement.cloneNode(true);
+      const configScript = clonedDoc.querySelector("#DEFAULT_CONFIG_SCRIPT");
+      if (configScript) {
+        configScript.textContent = `\n    window.__MILLIONAIRE_EMBEDDED_CONFIG__ = ${JSON.stringify(appConfig, null, 2)};\n  `;
+      }
+      // إخفاء أي نوافذ مفتوحة في النسخة المصدرة
+      ["registerModal", "logoutConfirmModal", "pinnedShareModal", "paidDrawModal", "adminAuthModal", "adminDashboardModal"].forEach(mId => {
+        const m = clonedDoc.querySelector(`#${mId}`);
+        if (m) {
+          m.classList.add("hidden");
+          m.classList.remove("flex");
+        }
+      });
+      const stack = clonedDoc.querySelector("#topCloudStack");
+      if (stack) stack.innerHTML = "";
+
+      const fullHtml = "<!DOCTYPE html>\n" + clonedDoc.outerHTML;
+      const blob = new Blob([fullHtml], { type: "text/html;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "index.html";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      showTopCloudNotification("تم توليد وتحميل ملف index.html المحدث بجميع إعداداتك بنجاح!", "success");
+    }
+
+    /*************************************************************************
+     * 9. محرك الخلفية RGB (نقاط وأيقونات إنفينيتي ∞ بأحجام متنوعة)
+     *************************************************************************/
+    function initBackgroundParticles() {
+      const canvas = document.getElementById("bgCanvas");
+      const ctx = canvas.getContext("2d");
+      let width = 0;
+      let height = 0;
+      let particles = [];
+
+      function resizeCanvas() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+
+      const particleCount = Math.min(65, Math.max(28, Math.floor((width * height) / 24000)));
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: (Math.random() - 0.5) * 0.45,
+          size: Math.random() * 14 + 3,
+          isInfinity: i % 3 === 0,
+          colorOffset: i
+        });
+      }
+
+      function animateParticles(timestamp) {
+        ctx.clearRect(0, 0, width, height);
+        const palette = (appConfig.visuals.rgbColors && appConfig.visuals.rgbColors.length > 0)
+          ? appConfig.visuals.rgbColors
+          : ["#00ffcc", "#ff0055", "#00ccff"];
+
+        const timeShift = Math.floor(timestamp / 1800);
+
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.x < -30) p.x = width + 30;
+          if (p.x > width + 30) p.x = -30;
+          if (p.y < -30) p.y = height + 30;
+          if (p.y > height + 30) p.y = -30;
+
+          const color = palette[(p.colorOffset + timeShift) % palette.length];
+          ctx.fillStyle = color;
+          ctx.shadowColor = color;
+          ctx.shadowBlur = 10;
+
+          if (p.isInfinity) {
+            ctx.font = `200 ${Math.round(p.size + 10)}px Cairo, sans-serif`;
+            ctx.fillText("∞", p.x, p.y);
+          } else {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size * 0.25, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        });
+
+        requestAnimationFrame(animateParticles);
+      }
+
+      requestAnimationFrame(animateParticles);
+    }
+
+    /*************************************************************************
+     * 10. أدوات مساعدة وتشغيل التطبيق عند التحميل
+     *************************************************************************/
+    function openModal(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove("hidden");
+      el.classList.add("flex");
+    }
+
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add("hidden");
+      el.classList.remove("flex");
+    }
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    window.addEventListener("load", function () {
+      renderMainPage();
+      initBackgroundParticles();
+      checkAndProcessCycleTick();
+      setInterval(checkAndProcessCycleTick, 1000);
+    });
+  </script>
+</body>
+</html>
